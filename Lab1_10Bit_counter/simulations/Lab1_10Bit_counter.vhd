@@ -1,10 +1,6 @@
 library ieee;
 use ieee.std_logic_1164.all;
-<<<<<<< HEAD
 use ieee.numeric_std.all;  -- To handle conversions between integers and std_logic_vector
-=======
-use ieee.numeric_std.all;  -- To handle conversions between integers and std_logic_vector 
->>>>>>> Lab1_10Bit_counter
 
 
 entity Lab1_10Bit_counter is
@@ -21,7 +17,8 @@ end Lab1_10Bit_counter;
 architecture Behavioral of Lab1_10Bit_counter is
    signal led_num : integer := 0;  -- LED counter signal
    signal counter : integer := 0;  -- Clock cycle counter signal
-   constant goal : integer := 25000000;  -- Count up to goal (to slow down the LED update)
+   constant goal : integer := 2;  -- Count up to goal (to slow down the LED update)
+								 --25000000
 begin
    process (MAX10_CLK1_50, KEY(0))
    begin
