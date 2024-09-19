@@ -1,10 +1,6 @@
 library ieee;
 use ieee.std_logic_1164.all;
-<<<<<<< HEAD
 use ieee.numeric_std.all;  -- To handle conversions between integers and std_logic_vector
-=======
-use ieee.numeric_std.all;  -- To handle conversions between integers and std_logic_vector 
->>>>>>> Lab1_10Bit_counter
 
 
 entity Lab1_10Bit_counter is
