@@ -6,14 +6,14 @@ entity HEX_seven_seg_disp is
 	port (
 		hex : in std_logic_vector(3 downto 0);
 		clk : in std_logic;
-		oseg : out std_logic_vector(7 downto 0)
+		oseg : out std_logic_vector(6 downto 0)
 	);
 end HEX_seven_seg_disp;
 
 architecture behavior of HEX_seven_seg_disp is
-	type HEX_TABLE is array (0 to 15) of std_logic_vector(7 downto 0);
-	constant table : HEX_TABLE := ("11000000", "11111001", "10100100", "10110000", "10011001", "10010010", "10000010",
-		"11111000", "10000000", "10011000", "10001000", "10000011", "11000110", "10100001", "10000110", "10001110");
+	type HEX_TABLE is array (0 to 15) of std_logic_vector(6 downto 0);
+	constant table : HEX_TABLE := ("1000000", "1111001", "0100100", "0110000", "0011001", "0010010", "0000010",
+		"1111000", "0000000", "0011000", "0001000", "0000011", "1000110", "0100001", "0000110", "0001110");
 begin
 	process(clk) 
 	begin
@@ -52,7 +52,7 @@ begin
 		when 15 =>
 			oseg <= table(15);
 		when others =>
-			oseg <= "11111111";
+			oseg <= "1111111";
 		end case;
 	end if;
 	end process;
