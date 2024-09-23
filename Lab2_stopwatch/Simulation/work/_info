@@ -1,0 +1,112 @@
+m255
+K4
+z2
+!s12c _opt
+Z0 !s99 nomlopt
+!s11e MIXED_VERSIONS
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z1 d/home/nate/Documents/School/Fall_2024/Reconfigurable-Computing---ECE-5730/Reconfig Labs/Lab2_stopwatch/Simulation
+T_opt
+!s110 1727127383
+VJdU4Plcg[;9W;HIdL4jON1
+04 10 10 work tb_counter behavioral 1
+=1-000ae431a4f1-66f1df56-e674c-3c58b
+R0
+!s12b OEM100
+!s124 OEM10U2 
+o-quiet -auto_acc_if_foreign -work work +acc
+tCvgOpt 0
+n@_opt
+OL;O;2023.3;77
+Ecounter
+Z2 w1727126936
+Z3 DPx4 ieee 11 numeric_std 0 22 F8@]:i<mFK7<TjIzKcTGi0
+Z4 DPx3 std 6 textio 0 22 LS[?81n5ZHWBI9JkBZTV<2
+Z5 DPx4 ieee 14 std_logic_1164 0 22 6<US`=mgl_dFdCEFF7J=m1
+!i122 33
+R1
+Z6 8/home/nate/Documents/School/Fall_2024/Reconfigurable-Computing---ECE-5730/Reconfig Labs/Lab2_stopwatch/Simulation/counter.vhd
+Z7 F/home/nate/Documents/School/Fall_2024/Reconfigurable-Computing---ECE-5730/Reconfig Labs/Lab2_stopwatch/Simulation/counter.vhd
+l0
+L5 1
+VgWD[FmYONjXJ1Qb2Dh]ak2
+!s100 fo:1i3S:e7]Q4dTlkMYeo1
+Z8 OL;C;2023.3;77
+32
+Z9 !s110 1727127359
+!i10b 1
+Z10 !s108 1727127359.000000
+Z11 !s90 -reportprogress|300|-work|work|/home/nate/Documents/School/Fall_2024/Reconfigurable-Computing---ECE-5730/Reconfig Labs/Lab2_stopwatch/Simulation/counter.vhd|
+Z12 !s107 /home/nate/Documents/School/Fall_2024/Reconfigurable-Computing---ECE-5730/Reconfig Labs/Lab2_stopwatch/Simulation/counter.vhd|
+!i113 0
+Z13 o-work work
+Z14 tExplicit 1 CvgOpt 0
+Asimple
+R3
+R4
+R5
+Z15 DEx4 work 7 counter 0 22 gWD[FmYONjXJ1Qb2Dh]ak2
+!i122 33
+l19
+L17 24
+VlhC=RRed`A1^hNf3Oi7za2
+!s100 1HEHhDNLaGK?a4g4bdD5J3
+R8
+32
+R9
+!i10b 1
+R10
+R11
+R12
+!i113 0
+R13
+R14
+Etb_counter
+Z16 w1727127352
+R15
+R3
+R4
+R5
+!i122 34
+R1
+Z17 8/home/nate/Documents/School/Fall_2024/Reconfigurable-Computing---ECE-5730/Reconfig Labs/Lab2_stopwatch/Simulation/testCounter.vhd
+Z18 F/home/nate/Documents/School/Fall_2024/Reconfigurable-Computing---ECE-5730/Reconfig Labs/Lab2_stopwatch/Simulation/testCounter.vhd
+l0
+L9 1
+VogP];MTGn7F^5cA<gN6DY1
+!s100 a@V_m=R4TUeoR40Y>J1j?3
+R8
+32
+R9
+!i10b 1
+R10
+Z19 !s90 -reportprogress|300|-work|work|/home/nate/Documents/School/Fall_2024/Reconfigurable-Computing---ECE-5730/Reconfig Labs/Lab2_stopwatch/Simulation/testCounter.vhd|
+Z20 !s107 /home/nate/Documents/School/Fall_2024/Reconfigurable-Computing---ECE-5730/Reconfig Labs/Lab2_stopwatch/Simulation/testCounter.vhd|
+!i113 0
+R13
+R14
+Abehavioral
+R3
+R4
+R5
+DEx4 work 10 tb_counter 0 22 ogP];MTGn7F^5cA<gN6DY1
+!i122 34
+l31
+L12 59
+VS`9ND=2HOVbiQPh5ed@CX1
+!s100 8fY1`HBCTPdDkjQ[lodX;0
+R8
+32
+R9
+!i10b 1
+R10
+R19
+R20
+!i113 0
+R13
+R14
