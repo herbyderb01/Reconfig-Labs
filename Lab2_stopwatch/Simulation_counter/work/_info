@@ -1,0 +1,263 @@
+m255
+K4
+z2
+Z0 !s12c _opt1
+Z1 !s99 nomlopt
+R0
+R1
+R0
+R1
+R0
+R1
+R0
+R1
+!s12c _opt
+R1
+!s11e MIXED_VERSIONS
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z2 d/home/nate/Documents/School/Fall_2024/Reconfigurable-Computing---ECE-5730/Reconfig Labs/Lab2_stopwatch/Simulation
+T_opt
+!s110 1727127383
+VJdU4Plcg[;9W;HIdL4jON1
+Z3 04 10 10 work tb_counter behavioral 1
+=1-000ae431a4f1-66f1df56-e674c-3c58b
+R1
+Z4 !s12b OEM100
+!s124 OEM10U2 
+Z5 o-quiet -auto_acc_if_foreign -work work +acc
+Z6 tCvgOpt 0
+n@_opt
+Z7 OL;O;2023.3;77
+R2
+T_opt1
+!s110 1727135137
+V4S@FGgBQkf5P@eA]XD@120
+R3
+=1-6c02e0ce081b-66f1fda1-34-5024
+R1
+R4
+!s124 OEM10U15 
+R5
+R6
+n@_opt1
+R7
+Ecounter
+Z8 w1727130813
+Z9 DPx4 ieee 11 numeric_std 0 22 F8@]:i<mFK7<TjIzKcTGi0
+Z10 DPx3 std 6 textio 0 22 LS[?81n5ZHWBI9JkBZTV<2
+Z11 DPx4 ieee 14 std_logic_1164 0 22 6<US`=mgl_dFdCEFF7J=m1
+!i122 150
+Z12 dC:/Users/natew/Documents/ECE 5730/Reconfig-Labs/Lab2_stopwatch/Simulation_counter
+Z13 8C:/Users/natew/Documents/ECE 5730/Reconfig-Labs/Lab2_stopwatch/Simulation_counter/counter.vhd
+Z14 FC:/Users/natew/Documents/ECE 5730/Reconfig-Labs/Lab2_stopwatch/Simulation_counter/counter.vhd
+l0
+L5 1
+VaUefo7^?jmY1;H@=O_IOM2
+!s100 =Ida`]564R@A1EQF=01QF1
+Z15 OL;C;2023.3;77
+32
+Z16 !s110 1727135124
+!i10b 1
+Z17 !s108 1727135124.000000
+Z18 !s90 -reportprogress|300|-work|work|C:/Users/natew/Documents/ECE 5730/Reconfig-Labs/Lab2_stopwatch/Simulation_counter/counter.vhd|
+Z19 !s107 C:/Users/natew/Documents/ECE 5730/Reconfig-Labs/Lab2_stopwatch/Simulation_counter/counter.vhd|
+!i113 0
+Z20 o-work work
+Z21 tExplicit 1 CvgOpt 0
+Asimple
+R9
+R10
+R11
+DEx4 work 7 counter 0 22 aUefo7^?jmY1;H@=O_IOM2
+!i122 150
+l21
+L19 29
+VV2^aQb[eG9K>dUDkeU:0F1
+!s100 olA:91JL:[A:Zea[5O5782
+R15
+32
+R16
+!i10b 1
+R17
+R18
+R19
+!i113 0
+R20
+R21
+Ehex_seven_seg_disp
+Z22 w1727130177
+R9
+R10
+R11
+!i122 151
+R12
+Z23 8C:/Users/natew/Documents/ECE 5730/Reconfig-Labs/Lab2_stopwatch/Simulation_counter/HEX_seven_seg_disp.vhd
+Z24 FC:/Users/natew/Documents/ECE 5730/Reconfig-Labs/Lab2_stopwatch/Simulation_counter/HEX_seven_seg_disp.vhd
+l0
+L5 1
+Vn[dlRL>3L`j`7mW1h3lZm3
+!s100 Ge_f@M0gD[SJR80FIj@:h1
+R15
+32
+R16
+!i10b 1
+R17
+Z25 !s90 -reportprogress|300|-work|work|C:/Users/natew/Documents/ECE 5730/Reconfig-Labs/Lab2_stopwatch/Simulation_counter/HEX_seven_seg_disp.vhd|
+Z26 !s107 C:/Users/natew/Documents/ECE 5730/Reconfig-Labs/Lab2_stopwatch/Simulation_counter/HEX_seven_seg_disp.vhd|
+!i113 0
+R20
+R21
+Abehavior
+R9
+R10
+R11
+DEx4 work 18 hex_seven_seg_disp 0 22 n[dlRL>3L`j`7mW1h3lZm3
+!i122 151
+l17
+L13 47
+VWl@P8E[BY7XLVDJK?0Z4o3
+!s100 dz>@E<N54Mkh?3FAU^>Iz2
+R15
+32
+R16
+!i10b 1
+R17
+R25
+R26
+!i113 0
+R20
+R21
+Ehex_seven_seg_disp_6
+Z27 w1727130147
+R9
+R10
+R11
+!i122 152
+R12
+Z28 8C:/Users/natew/Documents/ECE 5730/Reconfig-Labs/Lab2_stopwatch/Simulation_counter/HEX_seven_seg_disp_6.vhd
+Z29 FC:/Users/natew/Documents/ECE 5730/Reconfig-Labs/Lab2_stopwatch/Simulation_counter/HEX_seven_seg_disp_6.vhd
+l0
+L5 1
+Vj=6P=C80[]1EU<c2le;hM0
+!s100 SCDKHGcf5UUPIYfk<5EB22
+R15
+32
+R16
+!i10b 1
+R17
+Z30 !s90 -reportprogress|300|-work|work|C:/Users/natew/Documents/ECE 5730/Reconfig-Labs/Lab2_stopwatch/Simulation_counter/HEX_seven_seg_disp_6.vhd|
+Z31 !s107 C:/Users/natew/Documents/ECE 5730/Reconfig-Labs/Lab2_stopwatch/Simulation_counter/HEX_seven_seg_disp_6.vhd|
+!i113 0
+R20
+R21
+Acomponent_list
+R9
+R10
+R11
+DEx4 work 20 hex_seven_seg_disp_6 0 22 j=6P=C80[]1EU<c2le;hM0
+!i122 152
+l31
+L23 49
+VF]22:XU=3^jknKCF2CRF=3
+!s100 UkP^T5^DCFYU6O5LK]OM;0
+R15
+32
+R16
+!i10b 1
+R17
+R30
+R31
+!i113 0
+R20
+R21
+Elab2_stopwatch
+Z32 w1727134597
+R9
+R10
+R11
+!i122 153
+R12
+Z33 8C:/Users/natew/Documents/ECE 5730/Reconfig-Labs/Lab2_stopwatch/Simulation_counter/Lab2_stopwatch.vhd
+Z34 FC:/Users/natew/Documents/ECE 5730/Reconfig-Labs/Lab2_stopwatch/Simulation_counter/Lab2_stopwatch.vhd
+l0
+L5 1
+VN8QHz6ZgaMTaP6C;UW0E[3
+!s100 19=m[]I>a7kVj;kP9a`PK0
+R15
+32
+Z35 !s110 1727135125
+!i10b 1
+R17
+Z36 !s90 -reportprogress|300|-work|work|C:/Users/natew/Documents/ECE 5730/Reconfig-Labs/Lab2_stopwatch/Simulation_counter/Lab2_stopwatch.vhd|
+Z37 !s107 C:/Users/natew/Documents/ECE 5730/Reconfig-Labs/Lab2_stopwatch/Simulation_counter/Lab2_stopwatch.vhd|
+!i113 0
+R20
+R21
+Acomponentlist
+R9
+R10
+R11
+DEx4 work 14 lab2_stopwatch 0 22 N8QHz6ZgaMTaP6C;UW0E[3
+!i122 153
+l61
+L21 133
+V[QZ1ZdzPFhF`La_CkMZnb2
+!s100 397S7BD4`g5GoUM8W_iD23
+R15
+32
+R35
+!i10b 1
+R17
+R36
+R37
+!i113 0
+R20
+R21
+Etb_counter
+Z38 w1727135113
+R9
+R10
+R11
+!i122 154
+R12
+Z39 8C:/Users/natew/Documents/ECE 5730/Reconfig-Labs/Lab2_stopwatch/Simulation_counter/testCounter.vhd
+Z40 FC:/Users/natew/Documents/ECE 5730/Reconfig-Labs/Lab2_stopwatch/Simulation_counter/testCounter.vhd
+l0
+L6 1
+VWZ5?>FGj?fjeCGR?H9>R[0
+!s100 kg3;=:WLdH^fTefU5df@D1
+R15
+32
+R35
+!i10b 1
+Z41 !s108 1727135125.000000
+Z42 !s90 -reportprogress|300|-work|work|C:/Users/natew/Documents/ECE 5730/Reconfig-Labs/Lab2_stopwatch/Simulation_counter/testCounter.vhd|
+Z43 !s107 C:/Users/natew/Documents/ECE 5730/Reconfig-Labs/Lab2_stopwatch/Simulation_counter/testCounter.vhd|
+!i113 0
+R20
+R21
+Abehavioral
+R9
+R10
+R11
+DEx4 work 10 tb_counter 0 22 WZ5?>FGj?fjeCGR?H9>R[0
+!i122 154
+l39
+L9 75
+V^^=zh>ZMLamFL6GQ[o1KV2
+!s100 0N>abUKQk8h1TM4DFY`Z?3
+R15
+32
+R35
+!i10b 1
+R41
+R42
+R43
+!i113 0
+R20
+R21
