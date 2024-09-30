@@ -1,0 +1,35 @@
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+entity LFSR is
+    generic (
+        M : integer := 16  -- LFSR bit width
+    );
+    port (
+        clk     : in  std_logic;
+        rst     : in  std_logic;
+        enable  : in  std_logic;
+        lfsr_out : out std_logic_vector(M-1 downto 0)
+    );
+end entity LFSR;
+
+architecture behavioral of LFSR is
+    signal lfsr : std_logic_vector(M-1 downto 0) := (others => '1');
+    signal bit  : std_logic;
+begin
+    process (clk, rst)
+    begin
+        if rst = '1' then
+            lfsr <= x"ACE1";  -- Initial non-zero start state
+        elsif rising_edge(clk) then
+            if enable = '1' then
+                -- Feedback polynomial: x^16 + x^14 + x^13 + x^11 + 1
+                bit <= lfsr(0) xor lfsr(2) xor lfsr(3) xor lfsr(5);
+                lfsr <= bit & lfsr(M-1 downto 1);  -- Shift register
+            end if;
+        end if;
+    end process;
+
+    lfsr_out <= lfsr;
+end architecture behavioral;

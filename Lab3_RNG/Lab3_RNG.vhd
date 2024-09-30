@@ -1,0 +1,84 @@
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+entity lab3_RNG is
+	generic (
+		N : integer := 8
+	);
+	port (
+		HEX0 : out std_logic_vector(N - 1 downto 0);
+		HEX1 : out std_logic_vector(N - 1 downto 0);
+		HEX2 : out std_logic_vector(N - 1 downto 0);
+		HEX3 : out std_logic_vector(N - 1 downto 0);
+		HEX4 : out std_logic_vector(N - 1 downto 0);
+		HEX5 : out std_logic_vector(N - 1 downto 0);
+		KEY : in std_logic_vector(1 downto 0);
+		ADC_clk_10 : in std_logic;
+		MAX10_CLK1_50 : in std_logic;
+		MAX10_CLK2_50 : in std_logic
+	);
+end lab3_RNG;
+
+architecture componentlist of lab3_RNG is
+	component RNG
+		generic (
+			N : integer := 8;
+			M : integer := 8
+		);
+		port(
+			clk : in std_logic;
+			en : in std_logic;
+			rst : in std_logic;
+			rn : out std_logic_vector ( N - 1 downto 0)
+		);
+	end component RNG;
+	
+	component HEX_seven_seg_disp
+		port (
+			hex : in std_logic_vector(3 downto 0);
+			clk : in std_logic;
+			oseg : out std_logic_vector(7 downto 0)
+		);
+	end component HEX_seven_seg_disp;
+	
+	signal rn : std_logic_vector (N - 1 downto 0);
+	
+
+begin
+
+	RNG1 : RNG 
+	-- Instantiate RNG (pseudo-random number generator)
+		generic map (
+			N => 8,
+			M => 12
+		)
+		port map (
+			clk => ADC_CLK_10,	-- Use the ADC clock
+			en => KEY(0),			-- Generate button (enable)
+			rst => KEY(1),		-- Reset button
+			rn => rn			-- Random number
+		);
+	
+	-- Display the lower nibble (4 bits) of the random number on HEX0
+	disp1 : HEX_seven_seg_disp
+		port map (
+			hex => rn(3 downto 0),
+			clk => ADC_CLK_10,
+			oseg => HEX0
+		);
+	
+	-- Display the upper nibble (4 bits) of the random number on HEX1
+	disp2 : HEX_seven_seg_disp
+		port map (
+			hex => rn(7 downto 4),
+			clk => ADC_CLK_10,
+			oseg => HEX1
+		);
+	
+	-- Turn off unused displays (set to all ones to disable all segments)
+    HEX2 <= (others => '1');
+    HEX3 <= (others => '1');
+    HEX4 <= (others => '1');
+    HEX5 <= (others => '1');
+end componentlist;

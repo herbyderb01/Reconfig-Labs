@@ -1,0 +1,169 @@
+m255
+K4
+z2
+!s12c _opt1
+Z0 !s99 nomlopt
+!s12c _opt
+R0
+!s11e vcom 2023.3 2023.07, Jul 17 2023
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z1 dC:/Users/natew/Documents/ECE 5730/Reconfig-Labs/Lab3_RNG/simulation
+T_opt
+!s110 1727732584
+VzP:>PO5L4EH1mGM][=2W@2
+Z2 04 8 10 work test_rng behavioral 1
+=1-6c02e0ce081b-66fb1b66-1c1-48b4
+R0
+Z3 !s12b OEM100
+Z4 !s124 OEM10U3 
+o-quiet -auto_acc_if_foreign -work work
+Z5 tCvgOpt 0
+n@_opt
+Z6 OL;O;2023.3;77
+R1
+T_opt1
+!s110 1727732625
+VR_GX`]KN51OaO@_e>Tn]51
+R2
+=1-6c02e0ce081b-66fb1b90-174-4e74
+R0
+R3
+R4
+o-quiet -auto_acc_if_foreign -work work +acc
+R5
+n@_opt1
+R6
+Elfsr
+Z7 w1727731633
+Z8 DPx4 ieee 11 numeric_std 0 22 F8@]:i<mFK7<TjIzKcTGi0
+Z9 DPx3 std 6 textio 0 22 LS[?81n5ZHWBI9JkBZTV<2
+Z10 DPx4 ieee 14 std_logic_1164 0 22 6<US`=mgl_dFdCEFF7J=m1
+!i122 28
+R1
+Z11 8C:/Users/natew/Documents/ECE 5730/Reconfig-Labs/Lab3_RNG/simulation/LFSR.vhd
+Z12 FC:/Users/natew/Documents/ECE 5730/Reconfig-Labs/Lab3_RNG/simulation/LFSR.vhd
+l0
+L5 1
+VmRo[SV>P8RhCX<mG6D0c60
+!s100 B6kLA[NCD8zQGZ6g2UAAV0
+Z13 OL;C;2023.3;77
+32
+Z14 !s110 1727732568
+!i10b 1
+Z15 !s108 1727732568.000000
+Z16 !s90 -reportprogress|300|-work|work|C:/Users/natew/Documents/ECE 5730/Reconfig-Labs/Lab3_RNG/simulation/LFSR.vhd|
+Z17 !s107 C:/Users/natew/Documents/ECE 5730/Reconfig-Labs/Lab3_RNG/simulation/LFSR.vhd|
+!i113 0
+Z18 o-work work
+Z19 tExplicit 1 CvgOpt 0
+Abehavioral
+R8
+R9
+R10
+DEx4 work 4 lfsr 0 22 mRo[SV>P8RhCX<mG6D0c60
+!i122 28
+l20
+L18 17
+V[z@l7LCCh3<;OXe_YU^km0
+!s100 4PHOU4cE8eT6P7in3]Ofl0
+R13
+32
+R14
+!i10b 1
+R15
+R16
+R17
+!i113 0
+R18
+R19
+Erng
+R7
+R8
+R9
+R10
+!i122 29
+R1
+Z20 8C:/Users/natew/Documents/ECE 5730/Reconfig-Labs/Lab3_RNG/simulation/RNG.vhd
+Z21 FC:/Users/natew/Documents/ECE 5730/Reconfig-Labs/Lab3_RNG/simulation/RNG.vhd
+l0
+L5 1
+V[]]QJHNl0bdo9R5S3IX1E3
+!s100 A`8DVQ82HF[a=RdeiG4RC3
+R13
+32
+R14
+!i10b 1
+R15
+Z22 !s90 -reportprogress|300|-work|work|C:/Users/natew/Documents/ECE 5730/Reconfig-Labs/Lab3_RNG/simulation/RNG.vhd|
+Z23 !s107 C:/Users/natew/Documents/ECE 5730/Reconfig-Labs/Lab3_RNG/simulation/RNG.vhd|
+!i113 0
+R18
+R19
+Abehavioral
+R8
+R9
+R10
+DEx4 work 3 rng 0 22 []]QJHNl0bdo9R5S3IX1E3
+!i122 29
+l35
+L18 41
+VQ>g2=UMdDANO688g[529G3
+!s100 JNdD4onh^QoI<M4B5]i173
+R13
+32
+R14
+!i10b 1
+R15
+R22
+R23
+!i113 0
+R18
+R19
+Etest_rng
+Z24 w1727732561
+R8
+R9
+R10
+!i122 30
+R1
+Z25 8C:/Users/natew/Documents/ECE 5730/Reconfig-Labs/Lab3_RNG/simulation/test_RNG.vhd
+Z26 FC:/Users/natew/Documents/ECE 5730/Reconfig-Labs/Lab3_RNG/simulation/test_RNG.vhd
+l0
+L5 1
+VD=SZN0H8:?DiRhROC`7]b2
+!s100 E[z;=R9nYc^^2Pf<CCVje2
+R13
+32
+Z27 !s110 1727732569
+!i10b 1
+R15
+Z28 !s90 -reportprogress|300|-work|work|C:/Users/natew/Documents/ECE 5730/Reconfig-Labs/Lab3_RNG/simulation/test_RNG.vhd|
+Z29 !s107 C:/Users/natew/Documents/ECE 5730/Reconfig-Labs/Lab3_RNG/simulation/test_RNG.vhd|
+!i113 0
+R18
+R19
+Abehavioral
+R8
+R9
+R10
+DEx4 work 8 test_rng 0 22 D=SZN0H8:?DiRhROC`7]b2
+!i122 30
+l30
+L8 60
+V^7>@<N4_<5HnS?eQRVY?T3
+!s100 W=P17XbSz9SCJCY:C[TPd0
+R13
+32
+R27
+!i10b 1
+R15
+R28
+R29
+!i113 0
+R18
+R19
