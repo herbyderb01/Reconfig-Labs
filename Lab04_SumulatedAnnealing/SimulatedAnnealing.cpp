@@ -52,7 +52,7 @@ double calculateEnergy() {
         int dx = std::abs(nodes[edge.start].x - nodes[edge.end].x);
         int dy = std::abs(nodes[edge.start].y - nodes[edge.end].y);
         energy += (dx + dy); // Manhattan distance
-    }
+    } //square something in here so we get better scoring
     return energy;
 }
 
