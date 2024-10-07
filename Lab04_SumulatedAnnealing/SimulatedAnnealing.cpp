@@ -17,6 +17,8 @@ struct Edge {
     int end;
 };
 
+void fix_placement();
+
 std::vector<Node> nodes;
 std::vector<Edge> edges;
 int gridX, gridY, numNodes;
@@ -37,6 +39,7 @@ void parseInput(const std::string &filename) {
         nodes[i].x = rand() % gridX; // Random initial placement on the grid
         nodes[i].y = rand() % gridY;
     }
+	fix_placement();
 
     // Read edges
     while (infile >> line) {
@@ -51,30 +54,113 @@ double calculateEnergy() {
     for (const auto &edge : edges) {
         int dx = std::abs(nodes[edge.start].x - nodes[edge.end].x);
         int dy = std::abs(nodes[edge.start].y - nodes[edge.end].y);
+		dx *= dx;
+		dy *= dy;
         energy += (dx + dy); // Manhattan distance
-    } //square something in here so we get better scoring
+    } 
     return energy;
+}
+
+void determine_action(int* dx, int* dy){
+	int action = rand()%4;
+	switch (action){
+		case 0:
+			*dx = 0;
+			*dy = 1;
+			break;
+		case 1:
+			*dx = 0;
+			*dy = -1;
+			break;
+		case 2:
+			*dx = 1;
+			*dy = 0;
+			break;
+		case 3:
+			*dx = -1;
+			*dy = 0;
+			break;
+	}
+}
+
+void fix_placement(){
+	int dx;
+	int dy;
+	for (int i = 0; i < numNodes; i++) {
+		for(int j = 0; j < numNodes; j++){
+			while(nodes[i].x == nodes[j].x && nodes[i].y == nodes[j].y && i != j){
+				determine_action(&dx, &dy);
+				if(nodes[i].x + dx < gridX && nodes[i].x + dx >= 0 
+				&& nodes[i].y + dy < gridY && nodes[i].y + dy >= 0){
+					nodes[i].x += dx;
+					nodes[i].y += dy;
+				}
+			}
+				
+		}
+    }
+}
+
+bool valid_placement(int dx, int dy, int idx){
+	for(int j = 0; j < numNodes; j++){
+		if(nodes[idx].x + dx == nodes[j].x && nodes[idx].y + dy == nodes[j].y && idx != j){
+			return false;
+		}
+	}
+	return true;
 }
 
 void simulatedAnnealing(double initialTemp, double coolingRate) {
     double temperature = initialTemp;
-
+	double currentEnergy = calculateEnergy();
+	int dx;
+	int dy;
     while (temperature > 1.0) {
         // Generate neighbor solution by swapping two nodes
-        int idx1 = rand() % numNodes;
-        int idx2 = rand() % numNodes;
+        int idx1 = abs(rand() % numNodes);
+		int idx2 = abs(rand() % numNodes);
+		
+		double currentEnergy = calculateEnergy();
+		determine_action(&dx, &dy);
+		//checks to make sure we make a valid movement checking grid
+		//boundaries and making sure we don't place on top of another.
+		while((nodes[idx1].x + dx > gridX || nodes[idx1].x + dx < 0) 
+		|| (nodes[idx1].y + dy > gridY || nodes[idx1].y + dy < 0) 
+		|| !valid_placement(dx,dy,idx1)){
+			determine_action(&dx, &dy);
+			idx1 = abs(rand() % numNodes);
+		}
 
-        std::swap(nodes[idx1], nodes[idx2]);
-
+		nodes[idx1].x += dx;
+		nodes[idx1].y += dy;
+		int if_swap = rand() % 20;
+		if(if_swap == 15){
+			int tempx = nodes[idx1].x;
+			int tempy = nodes[idx1].y;
+			nodes[idx1].x = nodes[idx2].x;
+			nodes[idx1].y = nodes[idx2].y;
+			nodes[idx2].x = tempx;
+			nodes[idx2].y = tempy;
+		}
+		
         double newEnergy = calculateEnergy();
-        double currentEnergy = calculateEnergy(); // Store the current energy before swapping
+											// Store the current energy before swapping
 
         if (newEnergy < currentEnergy || 
             (std::exp((currentEnergy - newEnergy) / temperature) > (double)rand() / RAND_MAX)) {
             // Accept the new solution
         } else {
             // Revert the swap if not accepted
-            std::swap(nodes[idx1], nodes[idx2]);
+			if(if_swap == 15){
+				int tempx = nodes[idx1].x;
+				int tempy = nodes[idx1].y;
+				nodes[idx1].x = nodes[idx2].x;
+				nodes[idx1].y = nodes[idx2].y;
+				nodes[idx2].x = tempx;
+				nodes[idx2].y = tempy;
+			}
+			nodes[idx1].x -= dx;
+			nodes[idx1].y -= dy;
         }
 
         temperature *= coolingRate; // Cool down
@@ -85,13 +171,17 @@ void outputResults(const std::string &filename) {
     std::ofstream outfile(filename);
     for (const auto &node : nodes) {
         outfile << "Node " << node.id << " placed at (" << node.x << ", " << node.y << ")\n";
+		std::cout << "Node " << node.id << " placed at (" << node.x << ", " << node.y << ")\n";
     }
 
     for (const auto &edge : edges) {
         int length = std::abs(nodes[edge.start].x - nodes[edge.end].x) + 
                      std::abs(nodes[edge.start].y - nodes[edge.end].y);
         outfile << "Edge from " << edge.start << " to " << edge.end << " has length " << length << "\n";
+		std::cout << "Edge from " << edge.start << " to " << edge.end << " has length " << length << "\n";
     }
+	outfile << calculateEnergy();
+	std::cout << calculateEnergy();
 }
 
 int main(int argc, char *argv[]) {
@@ -103,7 +193,8 @@ int main(int argc, char *argv[]) {
     }
 
     parseInput(argv[1]);
-    simulatedAnnealing(1000.0, 0.99); // Adjust parameters for your experiments
+	//outputResults(argv[2]);
+    simulatedAnnealing(10000000000.0, 0.9999); // Adjust parameters for your experiments
     outputResults(argv[2]);
 
     return 0;
