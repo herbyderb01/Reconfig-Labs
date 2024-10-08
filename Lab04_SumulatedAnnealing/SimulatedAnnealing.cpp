@@ -56,8 +56,16 @@ double calculateEnergy() {
         int dy = std::abs(nodes[edge.start].y - nodes[edge.end].y);
 		dx *= dx;
 		dy *= dy;
+		if(dx == 0 && dy == 0)
+			energy += 10000;
         energy += (dx + dy); // Manhattan distance
     } 
+	for (int i = 0; i < numNodes; i++) {
+		for(int j = 0; j < numNodes; j++){
+			if(nodes[i].x == nodes[j].x	&& nodes[i].y == nodes[j].y && i != j)
+				energy += 10000;
+		}
+    }
     return energy;
 }
 
@@ -115,13 +123,13 @@ void simulatedAnnealing(double initialTemp, double coolingRate) {
 	double currentEnergy = calculateEnergy();
 	int dx;
 	int dy;
-    while (temperature > 1.0) {
+    while (temperature > 0.1) {
         // Generate neighbor solution by swapping two nodes
         int idx1 = abs(rand() % numNodes);
 		int idx2 = abs(rand() % numNodes);
 		
 		double currentEnergy = calculateEnergy();
-		determine_action(&dx, &dy);
+		/*determine_action(&dx, &dy);
 		//checks to make sure we make a valid movement checking grid
 		//boundaries and making sure we don't place on top of another.
 		while((nodes[idx1].x + dx > gridX || nodes[idx1].x + dx < 0) 
@@ -141,8 +149,13 @@ void simulatedAnnealing(double initialTemp, double coolingRate) {
 			nodes[idx1].y = nodes[idx2].y;
 			nodes[idx2].x = tempx;
 			nodes[idx2].y = tempy;
-		}
-		
+		}*/
+		int new_x = rand() % gridX; // Random initial placement on the grid
+        int new_y = rand() % gridY;
+		int old_x = nodes[idx1].x;
+		int old_y = nodes[idx1].y;
+		nodes[idx1].x = new_x;
+		nodes[idx1].y = new_y;
         double newEnergy = calculateEnergy();
 											// Store the current energy before swapping
 
@@ -150,8 +163,10 @@ void simulatedAnnealing(double initialTemp, double coolingRate) {
             (std::exp((currentEnergy - newEnergy) / temperature) > (double)rand() / RAND_MAX)) {
             // Accept the new solution
         } else {
+			nodes[idx1].x = old_x;
+			nodes[idx1].y = old_y;	
             // Revert the swap if not accepted
-			if(if_swap == 15){
+			/*if(if_swap == 15){
 				int tempx = nodes[idx1].x;
 				int tempy = nodes[idx1].y;
 				nodes[idx1].x = nodes[idx2].x;
@@ -161,6 +176,7 @@ void simulatedAnnealing(double initialTemp, double coolingRate) {
 			}
 			nodes[idx1].x -= dx;
 			nodes[idx1].y -= dy;
+			*/
         }
 
         temperature *= coolingRate; // Cool down
@@ -194,7 +210,7 @@ int main(int argc, char *argv[]) {
 
     parseInput(argv[1]);
 	//outputResults(argv[2]);
-    simulatedAnnealing(10000000000.0, 0.9999); // Adjust parameters for your experiments
+    simulatedAnnealing(1000000.0, 0.999); // Adjust parameters for your experiments
     outputResults(argv[2]);
 
     return 0;
