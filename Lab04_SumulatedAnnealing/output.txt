@@ -1,14 +1,14 @@
-Node 0 placed at (0, 0)
-Node 1 placed at (1, 1)
-Node 2 placed at (2, 1)
-Node 3 placed at (3, 0)
-Node 4 placed at (1, 0)
-Node 5 placed at (3, 1)
-Node 6 placed at (2, 0)
+Node 0 placed at (2, 1)
+Node 1 placed at (1, 2)
+Node 2 placed at (3, 4)
+Node 3 placed at (1, 4)
+Node 4 placed at (2, 2)
+Node 5 placed at (2, 4)
+Node 6 placed at (2, 3)
 Edge from 0 to 4 has length 1
 Edge from 1 to 4 has length 1
 Edge from 2 to 5 has length 1
 Edge from 3 to 5 has length 1
 Edge from 4 to 6 has length 1
-Edge from 5 to 6 has length 2
-7
+Edge from 5 to 6 has length 1
+6
