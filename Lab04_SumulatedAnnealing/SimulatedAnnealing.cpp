@@ -5,6 +5,7 @@
 #include <cmath>
 #include <ctime>
 #include <algorithm>
+#include <chrono>
 
 struct Node {
     int id;
@@ -202,7 +203,9 @@ void outputResults(const std::string &filename) {
 
 int main(int argc, char *argv[]) {
     srand(static_cast<unsigned int>(time(0))); // Seed for random number generation
-
+	double cooling_temp = .99;
+	int iterations = 10;
+	double temp = 1000001.0;
     if (argc != 3) {
         std::cerr << "Usage: " << argv[0] << " input.txt output.txt\n";
         return 1;
@@ -210,8 +213,28 @@ int main(int argc, char *argv[]) {
 
     parseInput(argv[1]);
 	//outputResults(argv[2]);
-    simulatedAnnealing(1000000.0, 0.999); // Adjust parameters for your experiments
-    outputResults(argv[2]);
+    //simulatedAnnealing(1000000.0, 0.999); // Adjust parameters for your experiments
+    //outputResults(argv[2]);
+	std::ofstream outFile("simulated_annealing_init_temp_results_3.csv");
+	outFile << "CoolingRate, Energy, Time(s)\n";
+	double duration_s;
+	double energy_s;
+	for(int i = 0; i < 100; i++){
+		energy_s = 0;
+		duration_s = 0;
+		for(int j = 0; j < iterations; j++){
+			auto start = std::chrono::high_resolution_clock::now();
+			simulatedAnnealing(temp, cooling_temp);
+			auto end = std::chrono::high_resolution_clock::now();
+			auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
+			duration_s += duration;
+			energy_s += calculateEnergy();
+		}
+		outFile << temp << "," << energy_s/iterations << "," << duration_s/iterations << "\n";
+		//cooling_temp -= .009
+		temp -= 10000;
+	}
+	outFile.close();
 
     return 0;
 }
