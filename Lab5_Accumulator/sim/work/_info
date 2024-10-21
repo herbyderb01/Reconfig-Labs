@@ -1,0 +1,129 @@
+m255
+K4
+z2
+Z0 !s12c _opt
+Z1 !s99 nomlopt
+!s12c _opt1
+R1
+R0
+R1
+!s11e vcom 2023.3 2023.07, Jul 17 2023
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z2 dC:/Users/natew/Documents/ECE 5730/lab5/sim
+T_opt
+!s110 1729319391
+V[AdkEIoRNkI:EON>B8OSi3
+Z3 04 12 10 work debouncer_tb behavioral 1
+=1-6c02e0ce081b-671351de-24a-384c
+R1
+Z4 !s12b OEM100
+!s124 OEM10U2 
+Z5 o-quiet -auto_acc_if_foreign -work work +acc
+Z6 tCvgOpt 0
+n@_opt
+Z7 OL;O;2023.3;77
+T_opt1
+!s110 1729319155
+VC2_?^V@;YkQbGP6Qb=]^V0
+04 9 6 work debouncer states 2
+R3
+=1-6c02e0ce081b-671350f2-3df-54f4
+R1
+R4
+!s124 OEM10U3 
+R5
+R6
+n@_opt1
+R7
+R2
+Edebouncer
+Z8 w1729318910
+Z9 DPx4 ieee 11 numeric_std 0 22 F8@]:i<mFK7<TjIzKcTGi0
+Z10 DPx3 std 6 textio 0 22 LS[?81n5ZHWBI9JkBZTV<2
+Z11 DPx4 ieee 14 std_logic_1164 0 22 6<US`=mgl_dFdCEFF7J=m1
+!i122 14
+R2
+Z12 8C:/Users/natew/Documents/ECE 5730/lab5/sim/debouncer.vhd
+Z13 FC:/Users/natew/Documents/ECE 5730/lab5/sim/debouncer.vhd
+l0
+L5 1
+Vg6iRjUWe=K<<[jN5zDJ4?2
+!s100 [6ER7dlElFG[OP:MD63Gk3
+Z14 OL;C;2023.3;77
+32
+Z15 !s110 1729319377
+!i10b 1
+Z16 !s108 1729319377.000000
+Z17 !s90 -reportprogress|300|-work|work|C:/Users/natew/Documents/ECE 5730/lab5/sim/debouncer.vhd|
+Z18 !s107 C:/Users/natew/Documents/ECE 5730/lab5/sim/debouncer.vhd|
+!i113 0
+Z19 o-work work
+Z20 tExplicit 1 CvgOpt 0
+Astates
+R9
+R10
+R11
+DEx4 work 9 debouncer 0 22 g6iRjUWe=K<<[jN5zDJ4?2
+!i122 14
+l16
+L13 50
+VAGT^m8PYS<8@g6[k^gRYM1
+!s100 L`USFaQhK7K<_ccCmb7C;2
+R14
+32
+R15
+!i10b 1
+R16
+R17
+R18
+!i113 0
+R19
+R20
+Edebouncer_tb
+Z21 w1729319369
+R9
+R10
+R11
+!i122 15
+R2
+Z22 8C:/Users/natew/Documents/ECE 5730/lab5/sim/debouncer_tb.vhd
+Z23 FC:/Users/natew/Documents/ECE 5730/lab5/sim/debouncer_tb.vhd
+l0
+L6 1
+VA5]b<>W=`_T44PT=anca;0
+!s100 Q2SMB>2U^@U80?FFMifeU2
+R14
+32
+R15
+!i10b 1
+R16
+Z24 !s90 -reportprogress|300|-work|work|C:/Users/natew/Documents/ECE 5730/lab5/sim/debouncer_tb.vhd|
+Z25 !s107 C:/Users/natew/Documents/ECE 5730/lab5/sim/debouncer_tb.vhd|
+!i113 0
+R19
+R20
+Abehavioral
+R9
+R10
+R11
+DEx4 work 12 debouncer_tb 0 22 A5]b<>W=`_T44PT=anca;0
+!i122 15
+l26
+L9 63
+Vcd25^mfI8fN0TGKlCRLgH0
+!s100 RVImBlcbKGGcSVj^8_VZ_0
+R14
+32
+R15
+!i10b 1
+R16
+R24
+R25
+!i113 0
+R19
+R20
