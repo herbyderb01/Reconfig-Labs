@@ -1,11 +1,15 @@
 m255
 K4
 z2
-Z0 !s12c _opt
+Z0 !s12c _opt2
 Z1 !s99 nomlopt
+R0
+R1
+Z2 !s12c _opt
+R1
 !s12c _opt1
 R1
-R0
+R2
 R1
 !s11e vcom 2023.3 2023.07, Jul 17 2023
 13
@@ -14,116 +18,129 @@ R1
 !i10e 25
 !i10f 100
 cModel Technology
-Z2 dC:/Users/natew/Documents/ECE 5730/lab5/sim
+Z3 dC:/Users/natew/Documents/ECE 5730/lab5/sim
 T_opt
 !s110 1729319391
 V[AdkEIoRNkI:EON>B8OSi3
-Z3 04 12 10 work debouncer_tb behavioral 1
+Z4 04 12 10 work debouncer_tb behavioral 1
 =1-6c02e0ce081b-671351de-24a-384c
 R1
-Z4 !s12b OEM100
-!s124 OEM10U2 
-Z5 o-quiet -auto_acc_if_foreign -work work +acc
-Z6 tCvgOpt 0
+Z5 !s12b OEM100
+Z6 !s124 OEM10U2 
+Z7 o-quiet -auto_acc_if_foreign -work work +acc
+Z8 tCvgOpt 0
 n@_opt
-Z7 OL;O;2023.3;77
+Z9 OL;O;2023.3;77
+R3
 T_opt1
 !s110 1729319155
 VC2_?^V@;YkQbGP6Qb=]^V0
 04 9 6 work debouncer states 2
-R3
+R4
 =1-6c02e0ce081b-671350f2-3df-54f4
 R1
-R4
+R5
 !s124 OEM10U3 
+R7
+R8
+n@_opt1
+R9
+R3
+T_opt2
+!s110 1729547997
+V7iF83]6Hdle?=QVF96C8g3
+R4
+=1-000ae431a4f1-6716cedd-43ec3-a44c
+R1
 R5
 R6
-n@_opt1
 R7
-R2
+R8
+n@_opt2
+R9
 Edebouncer
-Z8 w1729318910
-Z9 DPx4 ieee 11 numeric_std 0 22 F8@]:i<mFK7<TjIzKcTGi0
-Z10 DPx3 std 6 textio 0 22 LS[?81n5ZHWBI9JkBZTV<2
-Z11 DPx4 ieee 14 std_logic_1164 0 22 6<US`=mgl_dFdCEFF7J=m1
-!i122 14
-R2
-Z12 8C:/Users/natew/Documents/ECE 5730/lab5/sim/debouncer.vhd
-Z13 FC:/Users/natew/Documents/ECE 5730/lab5/sim/debouncer.vhd
+Z10 w1729547856
+Z11 DPx4 ieee 11 numeric_std 0 22 F8@]:i<mFK7<TjIzKcTGi0
+Z12 DPx3 std 6 textio 0 22 LS[?81n5ZHWBI9JkBZTV<2
+Z13 DPx4 ieee 14 std_logic_1164 0 22 6<US`=mgl_dFdCEFF7J=m1
+!i122 19
+Z14 d/home/nate/Documents/School/Fall_2024/Reconfigurable-Computing---ECE-5730/Reconfig Labs/Lab5_Accumulator/sim/Debouncer
+Z15 8/home/nate/Documents/School/Fall_2024/Reconfigurable-Computing---ECE-5730/Reconfig Labs/Lab5_Accumulator/sim/Debouncer/debouncer.vhd
+Z16 F/home/nate/Documents/School/Fall_2024/Reconfigurable-Computing---ECE-5730/Reconfig Labs/Lab5_Accumulator/sim/Debouncer/debouncer.vhd
 l0
 L5 1
 Vg6iRjUWe=K<<[jN5zDJ4?2
 !s100 [6ER7dlElFG[OP:MD63Gk3
-Z14 OL;C;2023.3;77
+Z17 OL;C;2023.3;77
 32
-Z15 !s110 1729319377
+Z18 !s110 1729547985
 !i10b 1
-Z16 !s108 1729319377.000000
-Z17 !s90 -reportprogress|300|-work|work|C:/Users/natew/Documents/ECE 5730/lab5/sim/debouncer.vhd|
-Z18 !s107 C:/Users/natew/Documents/ECE 5730/lab5/sim/debouncer.vhd|
+Z19 !s108 1729547985.000000
+Z20 !s90 -reportprogress|300|-work|work|/home/nate/Documents/School/Fall_2024/Reconfigurable-Computing---ECE-5730/Reconfig Labs/Lab5_Accumulator/sim/Debouncer/debouncer.vhd|
+Z21 !s107 /home/nate/Documents/School/Fall_2024/Reconfigurable-Computing---ECE-5730/Reconfig Labs/Lab5_Accumulator/sim/Debouncer/debouncer.vhd|
 !i113 0
-Z19 o-work work
-Z20 tExplicit 1 CvgOpt 0
+Z22 o-work work
+Z23 tExplicit 1 CvgOpt 0
 Astates
-R9
-R10
 R11
+R12
+R13
 DEx4 work 9 debouncer 0 22 g6iRjUWe=K<<[jN5zDJ4?2
-!i122 14
+!i122 19
 l16
-L13 50
-VAGT^m8PYS<8@g6[k^gRYM1
-!s100 L`USFaQhK7K<_ccCmb7C;2
-R14
-32
-R15
-!i10b 1
-R16
+L13 52
+VIodf3_Q5Ch>BaUV5PdV>80
+!s100 ?^@mCJ`SGO[hQ>4GnE?JN0
 R17
+32
 R18
-!i113 0
+!i10b 1
 R19
 R20
+R21
+!i113 0
+R22
+R23
 Edebouncer_tb
-Z21 w1729319369
-R9
-R10
+Z24 w1729547974
 R11
-!i122 15
-R2
-Z22 8C:/Users/natew/Documents/ECE 5730/lab5/sim/debouncer_tb.vhd
-Z23 FC:/Users/natew/Documents/ECE 5730/lab5/sim/debouncer_tb.vhd
+R12
+R13
+!i122 18
+R14
+Z25 8/home/nate/Documents/School/Fall_2024/Reconfigurable-Computing---ECE-5730/Reconfig Labs/Lab5_Accumulator/sim/Debouncer/debouncer_tb.vhd
+Z26 F/home/nate/Documents/School/Fall_2024/Reconfigurable-Computing---ECE-5730/Reconfig Labs/Lab5_Accumulator/sim/Debouncer/debouncer_tb.vhd
 l0
 L6 1
 VA5]b<>W=`_T44PT=anca;0
 !s100 Q2SMB>2U^@U80?FFMifeU2
-R14
+R17
 32
-R15
+R18
 !i10b 1
-R16
-Z24 !s90 -reportprogress|300|-work|work|C:/Users/natew/Documents/ECE 5730/lab5/sim/debouncer_tb.vhd|
-Z25 !s107 C:/Users/natew/Documents/ECE 5730/lab5/sim/debouncer_tb.vhd|
-!i113 0
 R19
-R20
+Z27 !s90 -reportprogress|300|-work|work|/home/nate/Documents/School/Fall_2024/Reconfigurable-Computing---ECE-5730/Reconfig Labs/Lab5_Accumulator/sim/Debouncer/debouncer_tb.vhd|
+Z28 !s107 /home/nate/Documents/School/Fall_2024/Reconfigurable-Computing---ECE-5730/Reconfig Labs/Lab5_Accumulator/sim/Debouncer/debouncer_tb.vhd|
+!i113 0
+R22
+R23
 Abehavioral
-R9
-R10
 R11
+R12
+R13
 DEx4 work 12 debouncer_tb 0 22 A5]b<>W=`_T44PT=anca;0
-!i122 15
+!i122 18
 l26
-L9 63
-Vcd25^mfI8fN0TGKlCRLgH0
-!s100 RVImBlcbKGGcSVj^8_VZ_0
-R14
+L9 59
+V2n8=9`5:Hd0ffh=16acoQ2
+!s100 Yi]hU`B@KXDd]i3NnIe7>3
+R17
 32
-R15
+R18
 !i10b 1
-R16
-R24
-R25
-!i113 0
 R19
-R20
+R27
+R28
+!i113 0
+R22
+R23

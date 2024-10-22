@@ -16,7 +16,9 @@ architecture states of debouncer is
 begin
 	
 	process(clk) begin
-		current_state <= next_state;
+		if rising_edge(clk) then
+			current_state <= next_state;
+		end if;
 	end process;
 	
 	process (current_state, btn)

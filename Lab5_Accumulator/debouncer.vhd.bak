@@ -6,7 +6,7 @@ entity debouncer is
 	port (
 		clk : in std_logic;
 		btn : in std_logic;
-		output : out std_logic
+		output : out std_logic;
 	);
 end;
 
@@ -16,10 +16,8 @@ architecture states of debouncer is
 begin
 	
 	process(clk) begin
-		if rising_edge(clk) then
-			current_state <= next_state;
-		end if;
-	end process;
+		current_state <= next_state;
+	end process
 	
 	process (current_state, btn)
 	begin
@@ -35,22 +33,22 @@ begin
 			when PRESSED =>
 				output <= '0';
 				if btn = '1' then
-					next_state <= HOLD;
+					next_state <= HELD;
 				else
 					next_state <= WAITING;
 				end if;
 				
-			when HOLD =>
+			when HELD =>
 				output <= '0';
 				if btn = '1' then
-					next_state <= HOLD;
+					next_state <= HELD;
 				else
 					next_state <= RELEASED;
 				end if;
 			
 			when RELEASED =>
 				if btn = '1' then
-					next_state <= HOLD;
+					next_state <= PRESSED;
 				else
 					next_state <= WAITING;
 					output <= '1';

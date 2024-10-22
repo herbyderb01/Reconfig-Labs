@@ -26,3 +26,7 @@ incremental_db/
 *.map
 
 Lab04_SumulatedAnnealing/.vscode/
+
+Lab5_Accumulator/sim/Accumulator/work/
+
+Lab5_Accumulator/sim/Debouncer/work/

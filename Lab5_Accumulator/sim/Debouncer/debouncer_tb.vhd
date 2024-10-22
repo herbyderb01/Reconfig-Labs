@@ -62,10 +62,6 @@ begin
 		btn <= '1';
 		wait for CLK_PERIOD/2; 
 		btn <= '0';
-		wait for CLK_PERIOD/2; 
-		btn <= '1';
-		wait for CLK_PERIOD/2; 
-		btn <= '0';
 	end process;
 	
 end architecture behavioral;

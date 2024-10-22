@@ -18,7 +18,7 @@ entity Lab5_accumulator is
 		HEX4 : out std_logic_vector(7 downto 0);
 		HEX5 : out std_logic_vector(7 downto 0);
 		
-		LEDR : out std_logic_vector(9 downto 0)
+		LEDR : out std_logic_vector(9 downto 0);
 	);
 end Lab5_accumulator;
 
@@ -51,39 +51,28 @@ architecture component_list of Lab5_accumulator is
 	end component HEX_seven_seg_disp_6;
 	
 	component accumulator
-		generic (
-			N : integer := 10;
-			M : integer := 10
-		);
-			port (
+		port (
 			en : in std_logic;
 			rst : in std_logic;
 			clk : in std_logic;
-			input : in std_logic_vector(N-1 downto 0);
-			sum : out std_logic_vector(M-1 downto 0)
+			input : in std_logic_vector(9 downto 0);
+			sum : out std_logic_vector(23 downto 0)
 		);
 	end component accumulator;
 	
 	signal rst : std_logic;
 	signal en : std_logic;
 	signal sum : std_logic_vector(23 downto 0);
-
-	signal key0_l : std_logic;
-	signal key1_l : std_logic;
 	
 begin
 
 	accumulator1 : accumulator
-		generic map (
-			N => 10,
-			M => 24
-		)
 		port map (
 			clk => ADC_CLK_10,
 			en => en,
 			rst => rst,
 			input => SW,
-			sum => sum
+			output => sum
 		);
 
 	display : HEX_seven_seg_disp_6
@@ -106,20 +95,17 @@ begin
 	rst_btn : debouncer
 		port map (
 			clk => ADC_CLK_10,
-			btn => key0_l,
+			btn => KEY(0),
 			output => rst
 		);
 		
 	en_btn : debouncer
 		port map (
 			clk => ADC_CLK_10,
-			btn => key1_l,
+			btn => KEY(1),
 			output => en
 		);
 		
 	LEDR <= SW;
-
-	key0_l <= not KEY(0); 
-	key1_l <= not KEY(1); 
 	
 end component_list;
