@@ -22,21 +22,18 @@ entity Lab6_FIFO is
 	);
 end Lab6_FIFO;
 
-architecture component_list of Lab6_FIFO is
+architecture component_list of Lab5_accumulator is
 
 	component fifo is
 		port (
-			aclr		: IN STD_LOGIC  := '0';
 			data		: IN STD_LOGIC_VECTOR (9 DOWNTO 0);
 			rdclk		: IN STD_LOGIC ;
 			rdreq		: IN STD_LOGIC ;
 			wrclk		: IN STD_LOGIC ;
 			wrreq		: IN STD_LOGIC ;
-			q			: OUT STD_LOGIC_VECTOR (9 DOWNTO 0);
-			rdusedw		: OUT STD_LOGIC_VECTOR (2 DOWNTO 0);
-			wrusedw		: OUT STD_LOGIC_VECTOR (2 DOWNTO 0)	
+			q		: OUT STD_LOGIC_VECTOR (9 DOWNTO 0)
 			);
-	end component fifo;
+	end component fifo
 
 	component PLL is
 		port (
@@ -44,7 +41,7 @@ architecture component_list of Lab6_FIFO is
 			c0		: OUT STD_LOGIC ;
 			c1		: OUT STD_LOGIC 
 		);
-	end component PLL;
+	end component PLL
 		
 	component write_fsm is
 		port (
@@ -54,7 +51,7 @@ architecture component_list of Lab6_FIFO is
 			MT : in std_logic;
 			wr_en : out std_logic
 		);
-	end component write_fsm;
+	end component write_fsm
 
 	component read_fsm is
 		port (
@@ -62,10 +59,9 @@ architecture component_list of Lab6_FIFO is
 			full : in std_logic;
 			MT   : in std_logic;
 			rd   : out std_logic;
-			en   : out std_logic;
-			clr  : out std_logic
+			en   : out std_logic
 			);
-	end component read_fsm;
+	end component read_fsm
 	
 	component debouncer
 		port (
@@ -128,52 +124,43 @@ architecture component_list of Lab6_FIFO is
 	signal wr_en : std_logic;
 
 	signal counter : integer;
-
-	signal rdusedw_sig : std_logic_vector(2 downto 0);
-	signal wrusedw_sig : std_logic_vector(2 downto 0);
-
-	signal aclr_sig : std_logic;
 	
 begin
 
 	fifo_inst : fifo 
-		port map (
-			aclr	 => aclr_sig,
-			data	 => SW,
-			rdclk	 => rd_clk,
-			rdreq	 => rd_en,
-			wrclk	 => wr_clk,
-			wrreq	 => wr_en,
-			q	 => q_sig,
-			rdusedw	 => rdusedw_sig,
-			wrusedw	 => wrusedw_sig
-			);
+	port map (
+		data	 => SW,
+		rdclk	 => rd_clk,
+		rdreq	 => rd_en,
+		wrclk	 => wr_clk,
+		wrreq	 => wr_en,
+		q	 => q_sig
+	);
 
 	PLL1 : PLL
-		port map (
-			inclk0 => MAX10_CLK2_50,
-			c0 => rd_clk, --12.5 MHZ
-			c1 => wr_clk -- 5 MHz
-		);
+	port map (
+		inclk0 => MAX10_CLK2_50,
+		c0 => rd_clk, --12.5 MHZ
+		c1 => wr_clk -- 5 MHz
+	);
 	
 	fsm1 : write_fsm 
-		port map (
-			clk => wr_clk,
-			btn => pressed,
-			full => full,
-			MT => MT,
-			wr_en => wr_en
-		);
+	port map {
+		clk => wr_clk,
+		btn => pressed,
+		full => full,
+		MT => MT,
+		wr_en => wr_en
+	};
 
 	fsm2 : read_fsm 
-		port map (
-			clk => rd_clk,
-			full => full,
-			MT => MT,
-			rd => rd_en,
-			en => en,
-			clr => aclr_sig
-		);
+	port map {
+		clk => rd_clk,
+		full => full,
+		MT => MT,
+		rd => rd_en,
+		en => en
+	};
 
 	accumulator1 : accumulator
 		generic map (
@@ -218,13 +205,30 @@ begin
 			btn => key1_l,
 			output => pressed
 		);
+
+	process(pressed, rd_en)
+	begin
+		if rising_edge(pressed) then
+			counter <= counter + 1;
+		end if;
+		if rising_edge(rd_en) then
+			counter <= counter - 1;
+		end if;
+		if counter = "5" then
+			full <= '1';
+		else
+			full <= '0';
+		end if;
+		if counter = "0" then
+			MT <= '1';
+		else
+			MT <= '0';
+		end if;
+	end process;
 		
 	LEDR <= SW;
 
 	key0_l <= not KEY(0); 
 	key1_l <= not KEY(1); 
-
-	full <= '1' when (wrusedw_sig = "101") else '0';
-	MT <= '1' when (wrusedw_sig = "000") else '0';
 	
 end component_list;

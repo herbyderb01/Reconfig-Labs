@@ -8,12 +8,13 @@ entity read_fsm is
         full : in std_logic;
         MT   : in std_logic;
         rd   : out std_logic;
-        en   : out std_logic
+        en   : out std_logic;
+        clr  : out std_logic
     );
 end read_fsm;
 
 architecture states of read_fsm is
-    type state_type is (idle, reading_fifo);
+    type state_type is (idle, reading_fifo, T1, T2);
     signal current_state, next_state : state_type;
 begin
 
@@ -32,6 +33,7 @@ begin
             when idle =>
                 rd <= '0';
                 en <= '0';
+                clr <= '0';
                 if full = '1' then
                     rd <= '1';
                     en <= '1';
@@ -40,12 +42,25 @@ begin
                     next_state <= idle;
                 end if;
 
+            when T1 =>
+                rd <= '0';
+                en <= '0';
+                clr <= '0';
+                next_state <= T2;
+            when T2 =>
+                rd <= '0';
+                en <= '0';
+                clr <= '0';
+                next_state <= reading_fifo;
+
             when reading_fifo =>
                 rd <= '1';
                 en <= '1';
+                clr <= '0';
                 if MT = '1' then
                     rd <= '0';
                     en <= '0';
+                    clr <= '1';
                     next_state <= idle;
                 else
                     next_state <= reading_fifo;

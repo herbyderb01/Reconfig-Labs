@@ -21,7 +21,7 @@ begin
 		if rising_edge(clk) then
 			current_state <= next_state;
 		end if;
-	end process;
+	end process
 
 	process (current_state, btn, full, MT)
 	begin
@@ -84,6 +84,6 @@ begin
 					wr_en <= '0';
 					next_state <= num5;
 				end if;
-		end case;
-	end process;
-end states;
+	
+	end process
+end states
