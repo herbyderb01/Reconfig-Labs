@@ -20,7 +20,7 @@ begin
 	process(clk) begin
 		if rising_edge(clk) then
 			current_state <= next_state;
-		end if
+		end if;
 	end process
 
 	process (current_state, btn, full, MT)
