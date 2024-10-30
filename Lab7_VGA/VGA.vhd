@@ -25,10 +25,10 @@ architecture Behavioral of VGA is
     constant H_BACK_PORCH  : integer := 48;   -- Back porch
     constant H_TOTAL       : integer := H_ACTIVE + H_FRONT_PORCH + H_SYNC_PULSE + H_BACK_PORCH;  -- Total horizontal pixels
 
-    constant V_ACTIVE      : integer := 480*H_TOTAL;  -- Active video (visible lines)
-    constant V_FRONT_PORCH : integer := 10*H_TOTAL;   -- Front porch
-    constant V_SYNC_PULSE  : integer := 2*H_TOTAL;    -- Sync pulse
-    constant V_BACK_PORCH  : integer := 33*H_TOTAL;   -- Back porch
+    constant V_ACTIVE      : integer := 480;  -- Active video (visible lines)
+    constant V_FRONT_PORCH : integer := 10;   -- Front porch
+    constant V_SYNC_PULSE  : integer := 2;    -- Sync pulse
+    constant V_BACK_PORCH  : integer := 33;   -- Back porch
     constant V_TOTAL       : integer := V_ACTIVE + V_FRONT_PORCH + V_SYNC_PULSE + V_BACK_PORCH;  -- Total vertical lines
 
     -- VGA State Machine states
@@ -46,7 +46,7 @@ begin
     process(clk)
     begin
         if rising_edge(clk) then
-            if reset = '1' then
+            if rst = '1' then
                 h_counter <= 0;
                 h_state <= FRONT_PORCH;
             else
@@ -65,7 +65,7 @@ begin
     process(clk)
     begin
         if rising_edge(clk) then
-            if reset = '1' then
+            if rst = '1' then
                 v_counter <= 0;
                 v_state <= FRONT_PORCH;
             elsif h_counter = H_TOTAL - 1 then  -- Only increment on each new line

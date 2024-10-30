@@ -19,7 +19,7 @@ entity Lab7_VGA is
 		VGA_G : out std_logic_vector(3 downto 0);
 		VGA_HS : out std_logic;
 		VGA_R : out std_logic_vector(3 downto 0);
-		VGA_VS : out std_logic
+		VGA_VS : out std_logic;
 	);
 end Lab7_VGA;
 
@@ -43,39 +43,30 @@ architecture component_list of Lab7_VGA is
 			h_count    : out integer;   -- Horizontal pixel count (optional, for debugging or extra features)
 			v_count    : out integer    -- Vertical line count (optional, for debugging or extra features)
 		);
-	end component VGA;
-
-	component PLL_25M
-		port (
-			inclk0	: in STD_LOGIC;
-			c0		: out STD_LOGIC
-		);
-	end component PLL_25M;
+	end component VGA
 	
 	
 	signal key0_l : std_logic;
 	signal key1_l : std_logic;
-	signal pressed : std_logic;
-
 
 	signal vga_clk	: std_logic;  -- VGA clock
 	signal rst		: std_logic;  -- Reset signal
 	signal pixel_en	: std_logic; -- Pixel enable signal (high when in active region)
 	signal h_count	: integer;   -- Horizontal pixel count (optional, for debugging or extra features)
-	signal v_count	: integer;    -- Vertical line count (optional, for debugging or extra features)
+	signal v_count	: integer    -- Vertical line count (optional, for debugging or extra features)
 
 begin
 
 	rst_btn : debouncer
 		port map (
-			clk => vga_clk,
+			clk => rd_clk,
 			btn => key0_l,
 			output => rst
 		);
 		
 	nextFlag_btn : debouncer
 		port map (
-			clk => vga_clk,
+			clk => wr_clk,
 			btn => key1_l,
 			output => pressed
 		);
@@ -91,19 +82,12 @@ begin
 			v_count    => v_count
 		);
 
-	PLL_25M_inst : PLL_25M 
-		port map (
-			inclk0	 => MAX10_CLK1_50,
-			c0	 => vga_clk
-		);
-
-
 	key0_l <= not KEY(0); 
 	key1_l <= not KEY(1); 
 
-	VGA_R <= "1111" when pixel_en = '1' else "0000";
-	VGA_G <= "1111" when pixel_en = '1' else "0000";
-	VGA_B <= "1111" when pixel_en = '1' else "0000";
+	VGA_R <= '1111' and pixel_en;
+	VGA_G <= '1111' and pixel_en;
+	VGA_B <= '1111' and pixel_en;
 	
 	
 end component_list;
