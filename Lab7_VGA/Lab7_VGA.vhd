@@ -101,9 +101,9 @@ begin
 	key0_l <= not KEY(0); 
 	key1_l <= not KEY(1); 
 
-	VGA_R <= "1111" when pixel_en = '1' else "0000";
-	VGA_G <= "1111" when pixel_en = '1' else "0000";
-	VGA_B <= "1111" when pixel_en = '1' else "0000";
+	VGA_R <= "0000" when pixel_en = '1' else "0000";
+	VGA_G <= "1001" when pixel_en = '1' else "0000";
+	VGA_B <= "1101" when pixel_en = '1' else "0000";
 	
 	
 end component_list;

@@ -37,8 +37,10 @@ architecture Behavioral of VGA is
     signal v_state, next_v_state : VGA_State := FRONT_PORCH;
 
     -- Counters for horizontal and vertical timing
-    signal h_counter : integer range 0 to H_TOTAL - 1 := 0;
-    signal v_counter : integer range 0 to V_TOTAL - 1 := 0;
+    -- signal h_counter : integer range 0 to H_TOTAL - 1 := 0;
+    -- signal v_counter : integer range 0 to V_TOTAL - 1 := 0;
+    signal h_counter : integer := 0;
+    signal v_counter : integer := 0;
 
 begin
 
@@ -52,7 +54,7 @@ begin
             else
                 -- Update state and counter
                 h_state <= next_h_state;
-                if h_counter = H_TOTAL - 1 then
+                if h_counter = H_TOTAL then
                     h_counter <= 0;  -- Reset on end of line
                 else
                     h_counter <= h_counter + 1;
@@ -68,9 +70,9 @@ begin
             if rst = '1' then
                 v_counter <= 0;
                 v_state <= FRONT_PORCH;
-            elsif h_counter = H_TOTAL - 1 then  -- Only increment on each new line
+            elsif h_counter = H_TOTAL then  -- Only increment on each new line
                 v_state <= next_v_state;
-                if v_counter = V_TOTAL - 1 then
+                if v_counter = V_TOTAL then
                     v_counter <= 0;  -- Reset on end of frame
                 else
                     v_counter <= v_counter + 1;
@@ -84,28 +86,28 @@ begin
     begin
         case h_state is
             when FRONT_PORCH =>
-            if h_counter = H_FRONT_PORCH - 1 then
+            if h_counter = H_FRONT_PORCH then
                 next_h_state <= SYNC_PULSE;
             else
                 next_h_state <= FRONT_PORCH;
             end if;
             
             when SYNC_PULSE =>
-            if h_counter = H_FRONT_PORCH + H_SYNC_PULSE - 1 then
+            if h_counter = H_FRONT_PORCH + H_SYNC_PULSE then
                 next_h_state <= BACK_PORCH;
             else
                 next_h_state <= SYNC_PULSE;
             end if;
             
             when BACK_PORCH =>
-            if h_counter = H_FRONT_PORCH + H_SYNC_PULSE + H_BACK_PORCH - 1 then
+            if h_counter = H_FRONT_PORCH + H_SYNC_PULSE + H_BACK_PORCH then
                 next_h_state <= PIXEL_DATA;
             else
                 next_h_state <= BACK_PORCH;
             end if;
 
             when PIXEL_DATA =>
-                if h_counter = H_ACTIVE - 1 then
+                if h_counter = H_ACTIVE then
                     next_h_state <= FRONT_PORCH;
                 else
                     next_h_state <= PIXEL_DATA;
@@ -118,28 +120,28 @@ begin
     begin
         case v_state is
             when FRONT_PORCH =>
-            if v_counter = V_FRONT_PORCH - 1 then
+            if v_counter = V_FRONT_PORCH then
                 next_v_state <= SYNC_PULSE;
             else
                 next_v_state <= FRONT_PORCH;
             end if;
             
             when SYNC_PULSE =>
-            if v_counter = V_FRONT_PORCH + V_SYNC_PULSE - 1 then
+            if v_counter = V_FRONT_PORCH + V_SYNC_PULSE then
                 next_v_state <= BACK_PORCH;
             else
                 next_v_state <= SYNC_PULSE;
             end if;
             
             when BACK_PORCH =>
-            if v_counter = V_FRONT_PORCH + V_SYNC_PULSE + V_BACK_PORCH - 1 then
+            if v_counter = V_FRONT_PORCH + V_SYNC_PULSE + V_BACK_PORCH then
                 next_v_state <= PIXEL_DATA;
             else
                 next_v_state <= BACK_PORCH;
             end if;
 
             when PIXEL_DATA =>
-                if v_counter = V_ACTIVE - 1 then
+                if v_counter = V_ACTIVE then
                     next_v_state <= FRONT_PORCH;
                 else
                     next_v_state <= PIXEL_DATA;
