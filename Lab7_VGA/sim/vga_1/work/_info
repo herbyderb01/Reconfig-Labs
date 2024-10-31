@@ -1,0 +1,83 @@
+m255
+K4
+z2
+!s11e MIXED_VERSIONS
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dC:/Users/natew/Documents/ECE 5730/Reconfig-Labs/Lab7_VGA/sim/vga_1
+Evga
+Z1 w1730392837
+Z2 DPx4 ieee 18 std_logic_unsigned 0 22 o4hn5gYc0WVo72BSL@Ta50
+Z3 DPx4 ieee 15 std_logic_arith 0 22 B[jVX6I8iRX2o6WYW0BB>3
+Z4 DPx4 ieee 11 numeric_std 0 22 F8@]:i<mFK7<TjIzKcTGi0
+Z5 DPx3 std 6 textio 0 22 LS[?81n5ZHWBI9JkBZTV<2
+Z6 DPx4 ieee 14 std_logic_1164 0 22 6<US`=mgl_dFdCEFF7J=m1
+!i122 10
+R0
+Z7 8C:/Users/natew/Documents/ECE 5730/Reconfig-Labs/Lab7_VGA/sim/vga_1/VGA.vhd
+Z8 FC:/Users/natew/Documents/ECE 5730/Reconfig-Labs/Lab7_VGA/sim/vga_1/VGA.vhd
+l0
+L7 1
+VfQhz9XjWN1MQb17=DoLY72
+!s100 >bb7<n@I5Y`?ESGLXdHa<1
+Z9 OL;C;2023.3;77
+32
+Z10 !s110 1730393045
+!i10b 1
+Z11 !s108 1730393045.000000
+Z12 !s90 -reportprogress|300|-work|work|C:/Users/natew/Documents/ECE 5730/Reconfig-Labs/Lab7_VGA/sim/vga_1/VGA.vhd|
+Z13 !s107 C:/Users/natew/Documents/ECE 5730/Reconfig-Labs/Lab7_VGA/sim/vga_1/VGA.vhd|
+!i113 0
+Z14 o-work work
+Z15 tExplicit 1 CvgOpt 0
+Abehavioral
+R2
+R3
+R4
+R5
+R6
+DEx4 work 3 vga 0 22 fQhz9XjWN1MQb17=DoLY72
+!i122 10
+l45
+L19 144
+VD5c9k94Am<9zRkfS_6l:i2
+!s100 ZFcljRVA`Kl^VL6YgkETg2
+R9
+32
+R10
+!i10b 1
+R11
+R12
+R13
+!i113 0
+R14
+R15
+Evga_1_tb
+w1730393042
+R2
+R3
+R4
+R5
+R6
+!i122 11
+R0
+8C:/Users/natew/Documents/ECE 5730/Reconfig-Labs/Lab7_VGA/sim/vga_1/vga_1_tb.vhd
+FC:/Users/natew/Documents/ECE 5730/Reconfig-Labs/Lab7_VGA/sim/vga_1/vga_1_tb.vhd
+l0
+L8 1
+V_@jZmnBMPofV9c?en35l[1
+!s100 YG@JJ]A7@X[i7mBD[GSU52
+R9
+32
+R10
+!i10b 1
+R11
+!s90 -reportprogress|300|-work|work|C:/Users/natew/Documents/ECE 5730/Reconfig-Labs/Lab7_VGA/sim/vga_1/vga_1_tb.vhd|
+!s107 C:/Users/natew/Documents/ECE 5730/Reconfig-Labs/Lab7_VGA/sim/vga_1/vga_1_tb.vhd|
+!i113 0
+R14
+R15
