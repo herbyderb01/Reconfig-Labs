@@ -5,8 +5,6 @@ use ieee.numeric_std.all;
 entity FrenchFlag is
     port (
         clk        : in std_logic;          -- VGA clock
-		rst			: in std_logic; -- Reset
-		en			: in std_logic; -- Enable
         h_count    : in integer range 0 to 639; -- Horizontal pixel count
         v_count    : in integer range 0 to 479; -- Vertical pixel count
         pixel_en   : in std_logic;          -- Pixel enable signal from VGA controller
@@ -21,7 +19,7 @@ begin
     process(clk)
     begin
         if rising_edge(clk) then
-            if pixel_en = '1' and en = '1' then
+            if pixel_en = '1' then
                 -- Determine the color based on horizontal position (h_count)
                 if count < 213 then
                     -- Left third of the flag (Blue)
@@ -44,6 +42,7 @@ begin
 
 
 			end if;
+
         end if;
     end process;
 end Behavioral;
