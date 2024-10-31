@@ -45,6 +45,16 @@ architecture component_list of Lab7_VGA is
 		);
 	end component VGA;
 
+	component FrenchFlag
+		port (
+			clk        : in std_logic;          -- VGA clock
+			h_count    : in integer range 0 to 639; -- Horizontal pixel count
+			v_count    : in integer range 0 to 479; -- Vertical pixel count
+			pixel_en   : in std_logic;          -- Pixel enable signal from VGA controller
+			pixel_rgb  : out std_logic_vector(17 downto 0) -- 18-bit RGB output (6 bits each for R, G, B)
+		);
+	end component FrenchFlag;
+
 	component PLL_25M
 		port (
 			inclk0	: in STD_LOGIC;
@@ -63,6 +73,8 @@ architecture component_list of Lab7_VGA is
 	signal pixel_en	: std_logic; -- Pixel enable signal (high when in active region)
 	signal h_count	: integer;   -- Horizontal pixel count (optional, for debugging or extra features)
 	signal v_count	: integer;    -- Vertical line count (optional, for debugging or extra features)
+
+	signal pixel_rgb        : std_logic_vector(17 downto 0);
 
 begin
 
@@ -91,6 +103,16 @@ begin
 			v_count    => v_count
 		);
 
+    -- Instantiate FrenchFlag pattern generator
+    french_flag : FrenchFlag
+        port map (
+            clk       => vga_clk,
+            h_count   => h_count,
+            v_count   => v_count,
+            pixel_en  => pixel_en,
+            pixel_rgb => pixel_rgb
+        );
+
 	PLL_25M_inst : PLL_25M 
 		port map (
 			inclk0	 => MAX10_CLK1_50,
@@ -101,9 +123,9 @@ begin
 	key0_l <= not KEY(0); 
 	key1_l <= not KEY(1); 
 
-	VGA_R <= "1111" when pixel_en = '1' else "0000";
-	VGA_G <= "1010" when pixel_en = '1' else "0000";
-	VGA_B <= "0000" when pixel_en = '1' else "0000";
-	
+    -- Assign pixel RGB values to VGA output based on `pixel_rgb`
+    VGA_R <= pixel_rgb(17 downto 14);
+    VGA_G <= pixel_rgb(11 downto 8);
+    VGA_B <= pixel_rgb(5 downto 2);	
 	
 end component_list;
