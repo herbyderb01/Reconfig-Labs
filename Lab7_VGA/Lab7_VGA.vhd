@@ -47,11 +47,13 @@ architecture component_list of Lab7_VGA is
 
 	component FrenchFlag
 		port (
-			clk        : in std_logic;          -- VGA clock
-			h_count    : in integer range 0 to 639; -- Horizontal pixel count
-			v_count    : in integer range 0 to 479; -- Vertical pixel count
-			pixel_en   : in std_logic;          -- Pixel enable signal from VGA controller
-			pixel_rgb  : out std_logic_vector(17 downto 0) -- 18-bit RGB output (6 bits each for R, G, B)
+			clk			: in std_logic;          -- VGA clock
+			rst			: in std_logic;
+			en			: in std_logic;
+			h_count		: in integer range 0 to 639; -- Horizontal pixel count
+			v_count		: in integer range 0 to 479; -- Vertical pixel count
+			pixel_en	: in std_logic;          -- Pixel enable signal from VGA controller
+			pixel_rgb	: out std_logic_vector(17 downto 0) -- 18-bit RGB output (6 bits each for R, G, B)
 		);
 	end component FrenchFlag;
 
@@ -106,11 +108,13 @@ begin
     -- Instantiate FrenchFlag pattern generator
     french_flag : FrenchFlag
         port map (
-            clk       => vga_clk,
-            h_count   => h_count,
-            v_count   => v_count,
-            pixel_en  => pixel_en,
-            pixel_rgb => pixel_rgb
+            clk			=> vga_clk,
+			rst			=> rst,
+			en			=> pixel_en, --fix later
+            h_count		=> h_count,
+            v_count		=> v_count,
+            pixel_en	=> pixel_en,
+            pixel_rgb	=> pixel_rgb
         );
 
 	PLL_25M_inst : PLL_25M 
