@@ -45,7 +45,7 @@ architecture component_list of Lab7_VGA is
 		);
 	end component VGA;
 
-	component FrenchFlag
+	component MaliFlag
 		port (
 			clk			: in std_logic;          -- VGA clock
 			rst			: in std_logic;
@@ -55,7 +55,7 @@ architecture component_list of Lab7_VGA is
 			pixel_en	: in std_logic;          -- Pixel enable signal from VGA controller
 			pixel_rgb	: out std_logic_vector(17 downto 0) -- 18-bit RGB output (6 bits each for R, G, B)
 		);
-	end component FrenchFlag;
+	end component MaliFlag;
 
 	component PLL_25M
 		port (
@@ -105,8 +105,8 @@ begin
 			v_count    => v_count
 		);
 
-    -- Instantiate FrenchFlag pattern generator
-    french_flag : FrenchFlag
+    -- Instantiate MaliFlag pattern generator
+    french_flag : MaliFlag
         port map (
             clk			=> vga_clk,
 			rst			=> rst,
