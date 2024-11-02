@@ -45,17 +45,17 @@ architecture component_list of Lab7_VGA is
 		);
 	end component VGA;
 
-	component GermanyFlag
+	component flags
 		port (
-			clk			: in std_logic;          -- VGA clock
-			rst			: in std_logic;
-			en			: in std_logic;
-			h_count		: in integer range 0 to 639; -- Horizontal pixel count
-			v_count		: in integer range 0 to 479; -- Vertical pixel count
-			pixel_en	: in std_logic;          -- Pixel enable signal from VGA controller
-			pixel_rgb	: out std_logic_vector(17 downto 0) -- 18-bit RGB output (6 bits each for R, G, B)
+			clk : in std_logic;
+			pixel_en : in std_logic;
+			rst : in std_logic;
+			advance: in std_logic;
+			VGA_R : out std_logic_vector(3 downto 0);
+			VGA_G : out std_logic_vector(3 downto 0);
+			VGA_B : out std_logic_vector(3 downto 0)
 		);
-	end component GermanyFlag;
+	end component flags;
 
 	component PLL_25M
 		port (
@@ -105,16 +105,16 @@ begin
 			v_count    => v_count
 		);
 
-    -- Instantiate GermanyFlag pattern generator
-    french_flag : GermanyFlag
+    -- Instantiate CongoFlag pattern generator
+    flags1 : flags
         port map (
             clk			=> vga_clk,
-			rst			=> rst,
-			en			=> pixel_en, --fix later
-            h_count		=> h_count,
-            v_count		=> v_count,
-            pixel_en	=> pixel_en,
-            pixel_rgb	=> pixel_rgb
+			pixel_en 	=> pixel_en,
+			rst 		=> rst,
+			advance		=> pressed,
+			VGA_R		=> VGA_R,
+			VGA_G		=> VGA_G,
+			VGA_B		=> VGA_B
         );
 
 	PLL_25M_inst : PLL_25M 
@@ -126,10 +126,5 @@ begin
 
 	key0_l <= not KEY(0); 
 	key1_l <= not KEY(1); 
-
-    -- Assign pixel RGB values to VGA output based on `pixel_rgb`
-    VGA_R <= pixel_rgb(17 downto 14);
-    VGA_G <= pixel_rgb(11 downto 8);
-    VGA_B <= pixel_rgb(5 downto 2);	
 	
 end component_list;

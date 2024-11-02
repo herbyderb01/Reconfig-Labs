@@ -15,7 +15,8 @@ entity GermanyFlag is
 end GermanyFlag;
 
 architecture Behavioral of GermanyFlag is
-	signal count : integer := v_count;
+	signal count : integer := 0;
+	signal line_count : integer := 0;
 
 begin
     process(clk)
@@ -23,21 +24,28 @@ begin
         if rising_edge(clk) then
             if rst = '1' then
                 pixel_rgb <= (others => '0');  -- Black when reset
+				count <= 0;
+				line_count <= 0;
             elsif pixel_en = '1' and en = '1' then
                 -- Determine the color based on vertical position (v_count)
-                if count < 160 then
+                if line_count < 160 then
                     -- Top third of the flag (Black)
-                    pixel_rgb <= "000000" & "001001" & "011001";  -- Dark Blue
-                elsif count < 320 then
+                    pixel_rgb <= "000000" & "000000" & "000000";  -- Dark Blue
+                elsif line_count < 320 then
                     -- Middle third of the flag (Red)
-                    pixel_rgb <= "111111" & "110010" & "000000";  -- Yellow
+                    pixel_rgb <= "111111" & "000000" & "000000";  -- Yellow
                 else
                     -- Bottom third of the flag (Yellow)
-                    pixel_rgb <= "110001" & "000011" & "001100";  -- Red
+                    pixel_rgb <= "111111" & "110000" & "000000";  -- Red
                 end if;
-
-				if count = 479 then
+					 
+			count <= count + 1;
+				if count = 639 then
 					count <= 0;
+					line_count <= line_count + 1;
+				end if;
+				if line_count = 480 then
+					line_count <= 0;
 				end if;
 
             else
