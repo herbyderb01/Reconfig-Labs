@@ -18,7 +18,7 @@ end Flags;
 
 architecture states of Flags is
 	type flag_state is (france, italy, ireland, belgium, mali, 
-	chad, nigeria, ivory, poland, germany, austria, congo);
+	chad, nigeria, ivory, poland, germany, austria, congo, usa);
 	signal current_flag, next_flag : flag_state := france;
 	
 	signal count : integer := 0;
@@ -444,11 +444,70 @@ begin
             end if;
 			if advance = '1' then
 				 
-				next_flag <= france;
+				next_flag <= usa;
 			else	
 				next_flag <= congo;
 			end if;
+
+		when usa =>
+			if pixel_en = '1' then
+				-- Define the regions for the flag
+				if count < 260 and line_count < 190 then
+					-- Blue field
+					VGA_R <= "0000";
+					VGA_G <= "0000";
+					VGA_B <= "1111";
+					
+					-- Add stars in a 6x5 alternating pattern
+					if (line_count mod 20 < 5 and count mod 20 < 5) or
+					   (line_count mod 20 >= 10 and count mod 20 >= 10) then
+						-- Small white rectangles for stars
+						VGA_R <= "1111";
+						VGA_G <= "1111";
+						VGA_B <= "1111";
+					end if;
+		
+				elsif line_count < 240 then
+					-- Red and white stripes
+					if (line_count / 20) mod 2 = 0 then
+						-- Red stripes
+						VGA_R <= "1111";
+						VGA_G <= "0000";
+						VGA_B <= "0000";
+					else
+						-- White stripes
+						VGA_R <= "1111";
+						VGA_G <= "1111";
+						VGA_B <= "1111";
+					end if;
+				else
+					-- Remaining red and white stripes
+					if ((line_count - 240) / 20) mod 2 = 0 then
+						-- Red stripes
+						VGA_R <= "1111";
+						VGA_G <= "0000";
+						VGA_B <= "0000";
+					else
+						-- White stripes
+						VGA_R <= "1111";
+						VGA_G <= "1111";
+						VGA_B <= "1111";
+					end if;
+				end if;
+		
+			else
+				-- Black when not in active area
+				VGA_R <= (others => '0');
+				VGA_G <= (others => '0');
+				VGA_B <= (others => '0');
+			end if;
 			
+			if advance = '1' then
+				next_flag <= france;
+			else    
+				next_flag <= USA;
+			end if;
+					
 			when others => 
 				 
 				next_flag <= france;
