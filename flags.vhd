@@ -17,9 +17,9 @@ entity flags is
 end flags;
 
 architecture states of flags is
-	type flag_state is (french, italy, ireland, belgium, mali, 
+	type flag_state is (france, italy, ireland, belgium, mali, 
 	chad, nigeria, ivory, poland, germany, austria, congo);
-	signal current_flag, next_flag : flag_state := french;
+	signal current_flag, next_flag : flag_state := france;
 	
 	signal flag_en : std_logic_vector(11 downto 0) := (others => '0');
 	
@@ -308,7 +308,7 @@ begin
 	begin
 		if rising_edge(clk) then
 			if rst = '1' then
-				current_flag <= french;
+				current_flag <= france;
 			else
 				current_flag <= next_flag;
 			end if;
@@ -318,13 +318,13 @@ begin
 	process(current_flag, next_flag)
 	begin
 		case current_flag is
-			when french =>
+			when france =>
 			flag_en(0) <= '1';
 			if advance = '1' then
 				flag_en <= (others => '0');
 				next_flag <= italy;
 			else	
-				next_flag <= french;
+				next_flag <= france;
 			end if;
 			
 			when italy =>
@@ -422,14 +422,14 @@ begin
 			flag_en(11) <= '1';
 			if advance = '1' then
 				flag_en <= (others => '0');
-				next_flag <= french;
+				next_flag <= france;
 			else	
 				next_flag <= congo;
 			end if;
 			
 			when others => 
 				flag_en <= (others => '0');
-				next_flag <= french;
+				next_flag <= france;
 		end case;
 	end process;
 	

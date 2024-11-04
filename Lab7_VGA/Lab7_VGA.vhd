@@ -45,7 +45,7 @@ architecture component_list of Lab7_VGA is
 		);
 	end component VGA;
 
-	component flags
+	component Flags
 		port (
 			clk : in std_logic;
 			pixel_en : in std_logic;
@@ -55,7 +55,7 @@ architecture component_list of Lab7_VGA is
 			VGA_G : out std_logic_vector(3 downto 0);
 			VGA_B : out std_logic_vector(3 downto 0)
 		);
-	end component flags;
+	end component Flags;
 
 	component PLL_25M
 		port (
@@ -106,7 +106,7 @@ begin
 		);
 
     -- Instantiate CongoFlag pattern generator
-    flags1 : flags
+    flags1 : Flags
         port map (
             clk			=> vga_clk,
 			pixel_en 	=> pixel_en,
