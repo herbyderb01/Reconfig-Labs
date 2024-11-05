@@ -19,7 +19,7 @@ end Flags;
 architecture states of Flags is
 	type flag_state is (france, italy, ireland, belgium, mali, 
 	chad, nigeria, ivory, poland, germany, austria, congo, usa);
-	signal current_flag, next_flag : flag_state := usa;
+	signal current_flag, next_flag : flag_state := france;
 	
 	signal count : integer := 0;
 	signal line_count : integer := 0;
@@ -451,24 +451,22 @@ begin
 
 		when USA =>
 			if pixel_en = '1' then
-				-- Define blue field for the stars (40% of width and 54% of height)
+				-- Define the blue field for the stars (40% of width and 54% of height)
 				if count < 256 and line_count < 259 then
 					-- Blue field background
 					VGA_R <= "0000";
 					VGA_G <= "0000";
 					VGA_B <= "1111";
 					
-					-- Star pattern (5 rows of 6 stars, and 4 rows of 5 stars)
-					if (line_count mod 19 < 10) then -- 10 pixels for each star row
-						if (count mod 43 < 10 and (line_count / 19) mod 2 = 0) or -- Even rows (6 stars)
-							(count mod 43 < 10 and (line_count / 19) mod 2 = 1 and (line_count mod 2 = 1)) then -- Odd rows (5 stars)
-							-- Draw a star
-							VGA_R <= "1111"; -- White
-							VGA_G <= "1111"; 
-							VGA_B <= "1111";
-						end if; 
-					end if;	
-
+					-- Star pattern within the blue field for 50 stars (5 rows of 6 stars, 4 rows of 5 stars)
+					if ((line_count mod 26 < 10) and ((line_count / 26) mod 2 = 0 and (count mod 43 < 10))) or
+						((line_count mod 26 < 10) and ((line_count / 26) mod 2 = 1 and ((count - 21) mod 43 < 10))) then
+						-- Stars represented by white squares within the grid pattern
+						VGA_R <= "1111";
+						VGA_G <= "1111";
+						VGA_B <= "1111";
+					end if;
+		
 				else
 					-- Draw stripes (13 stripes alternating red and white)
 					if ((line_count / 37) mod 2 = 0) then
@@ -497,7 +495,7 @@ begin
 			else
 				next_flag <= USA;
 			end if;
-
+		
 		when others => 
 				 
 				next_flag <= france;
