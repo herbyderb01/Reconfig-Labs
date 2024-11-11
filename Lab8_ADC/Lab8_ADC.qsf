@@ -6,12 +6,11 @@ set_global_assignment -name FAMILY "MAX 10 FPGA"
 set_global_assignment -name DEVICE 10M50DAF484C7G
 set_global_assignment -name TOP_LEVEL_ENTITY "Lab8_ADC"
 set_global_assignment -name ORIGINAL_QUARTUS_VERSION "16.0.0"
-set_global_assignment -name LAST_QUARTUS_VERSION "16.0.0"
+set_global_assignment -name LAST_QUARTUS_VERSION "23.1std.0 Lite Edition"
 set_global_assignment -name PROJECT_CREATION_TIME_DATE "08:57:30 NOVEMBER 11,2024"
 set_global_assignment -name DEVICE_FILTER_PACKAGE FBGA
 set_global_assignment -name DEVICE_FILTER_PIN_COUNT 484
 set_global_assignment -name DEVICE_FILTER_SPEED_GRADE 7
-set_global_assignment -name SDC_FILE Lab8_ADC.SDC
 
 #============================================================
 # CLOCK
@@ -135,3 +134,14 @@ set_location_assignment PIN_A7 -to KEY[1]
 # End of pin assignments by Terasic System Builder
 #============================================================
 
+
+set_global_assignment -name MIN_CORE_JUNCTION_TEMP 0
+set_global_assignment -name MAX_CORE_JUNCTION_TEMP 85
+set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "23 MM HEAT SINK WITH 200 LFPM AIRFLOW"
+set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
+set_global_assignment -name QIP_FILE base_ADC/synthesis/base_ADC.qip
+set_global_assignment -name VHDL_FILE Lab8_ADC.vhd
+set_global_assignment -name VHDL_FILE HEX_seven_seg_disp_6.vhd
+set_global_assignment -name VHDL_FILE HEX_seven_seg_disp.vhd
+set_global_assignment -name VHDL_FILE debouncer.vhd
+set_global_assignment -name SDC_FILE Lab8_ADC.SDC
