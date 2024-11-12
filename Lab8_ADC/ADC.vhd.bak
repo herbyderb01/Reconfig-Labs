@@ -3,13 +3,10 @@ use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
 entity ADC is
-	-- generic (
-	-- 	N : integer := 10000000
-	-- );
 	port (
 		clk : in std_logic;
 		btn : in std_logic;
-		output : out std_logic_vector(11 downto 0)
+		output : out std_logic
 	);
 end;
 		
@@ -39,16 +36,16 @@ architecture counter of ADC is
 			c0						: OUT STD_LOGIC ;
 			locked					: OUT STD_LOGIC 
 		);
-	end component PLL_10M;
+	end PLL_10M;
 
 	signal s_clock_clk              : std_logic;
 	-- signal s_reset_sink_reset_n     : std_logic;
 	signal s_adc_pll_clock_clk      : std_logic;
 	signal s_adc_pll_locked_export  : std_logic;
-	signal s_command_valid          : std_logic := '1';
-	signal s_command_channel        : std_logic_vector(4 downto 0) := "00001";
-	signal s_command_startofpacket  : std_logic := '1';
-	signal s_command_endofpacket    : std_logic := '1';
+	signal s_command_valid          : std_logic;
+	signal s_command_channel        : std_logic_vector(4 downto 0);
+	signal s_command_startofpacket  : std_logic;
+	signal s_command_endofpacket    : std_logic;
 	signal s_command_ready          : std_logic;                                        -- ready
 	signal s_response_valid         : std_logic;                                        -- valid
 	signal s_response_channel       : std_logic_vector(4 downto 0);
@@ -58,9 +55,6 @@ architecture counter of ADC is
 
 	signal temp_Data				: std_logic_vector(11 downto 0);
 
-
-	signal count : integer := 0;
-	-- signal v_counter : integer := 0;
 begin
 
 	u0 : component base_ADC
@@ -90,21 +84,16 @@ begin
 	proc1: process(clk)
 	begin
 		if rising_edge(clk) then
-			if btn = '0' then
+			if rst = '1' then
 				output <= (others => '0');
-				count <= 0;
-			elsif s_response_valid = '1' then
-				temp_Data <= s_response_data;
-			end if;
-			if count = 10000000 then
-				output <= temp_Data;
-				count <= 0;
-			else 
-				count <= count + 1;
+			else
+				temp_Data <= response_data;
+
+
 			end if;
 		end if;
 	end process proc1;
 
-
+	output <= temp_Data;
 
 end counter;

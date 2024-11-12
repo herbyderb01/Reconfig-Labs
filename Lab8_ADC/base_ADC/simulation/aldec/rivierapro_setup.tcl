@@ -12,7 +12,7 @@
 # or its authorized distributors. Please refer to the applicable 
 # agreement for further details.
 
-# ACDS 23.1 991 linux 2024.11.11.14:55:12
+# ACDS 23.1 991 linux 2024.11.11.15:31:50
 # ----------------------------------------
 # Auto-generated simulation script rivierapro_setup.tcl
 # ----------------------------------------

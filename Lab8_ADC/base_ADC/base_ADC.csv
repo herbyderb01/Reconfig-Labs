@@ -1,12 +1,12 @@
-# system info base_ADC on 2024.11.11.14:55:11
+# system info base_ADC on 2024.11.11.15:31:50
 system_info:
 name,value
 DEVICE,10M50DAF484C7G
 DEVICE_FAMILY,MAX 10
-GENERATION_ID,1731362111
+GENERATION_ID,1731364309
 #
 #
-# Files generated for base_ADC on 2024.11.11.14:55:11
+# Files generated for base_ADC on 2024.11.11.15:31:50
 files:
 filepath,kind,attributes,module,is_top
 simulation/base_ADC.vhd,VHDL,,base_ADC,true
