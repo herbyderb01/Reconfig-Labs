@@ -47,17 +47,11 @@ architecture component_list of FinalProject is
 
 	component draw_board is
         port (
-			clk			: in  std_logic;  -- VGA clock
-			rst			: in  std_logic;  -- Reset
-			pixel_x    : in  STD_LOGIC_VECTOR(9 downto 0);  -- Pixel X coordinate
-			pixel_y    : in  STD_LOGIC_VECTOR(9 downto 0);  -- Pixel Y coordinate
-			pixel_en   : in  STD_LOGIC;                     -- Pixel enable signal
-			ball_x     : in  integer;                        -- Ball X position
-			ball_y     : in  integer;                        -- Ball Y position
-			paddle_1_y : in  integer;                        -- Paddle 1 Y position
-			paddle_2_y : in  integer;                        -- Paddle 2 Y position
-			board_color : out STD_LOGIC_VECTOR(11 downto 0)  -- RGB color output for each pixel
-		);
+            pixel_x     : in  STD_LOGIC_VECTOR(9 downto 0);
+            pixel_y     : in  STD_LOGIC_VECTOR(9 downto 0);
+            pixel_en    : in  STD_LOGIC;
+            board_color : out STD_LOGIC_VECTOR(11 downto 0)
+        );
     end component;
 
 	component PLL_25M
@@ -84,12 +78,8 @@ architecture component_list of FinalProject is
 	-- Signal declarations for VGA and board drawing
     signal pixel_x     : STD_LOGIC_VECTOR(9 downto 0);
     signal pixel_y     : STD_LOGIC_VECTOR(9 downto 0);
+    signal pixel_en    : STD_LOGIC;
     signal board_color : STD_LOGIC_VECTOR(11 downto 0); -- RGB color output
-
-	signal ball_x		: integer; -- Ball X position
-	signal ball_y		: integer; -- Ball Y position
-	signal paddle_1_y		: integer; -- Paddle 1 Y position
-	signal paddle_2_y		: integer; -- Paddle 2 Y position
 
 begin
 	-- Reset the game button
@@ -123,11 +113,9 @@ begin
 	-- Instantiate draw_board module
     draw_board_inst : draw_board
         port map (
-			clk			=> vga_clk,
-			rst			=> rst,
             pixel_x    => pixel_x,
             pixel_y    => pixel_y,
-            pixel_en   => pixel_en,
+            pixel_en   => pixel_en_internal,
             ball_x     => ball_x,
             ball_y     => ball_y,
             paddle_1_y => paddle_1_y,
