@@ -21,8 +21,8 @@ architecture states of Flags is
 	chad, nigeria, ivory, poland, germany, austria, congo);
 	signal current_flag, next_flag : flag_state := france;
 	
-	signal count : integer := 0;
-	signal line_count : integer := 0;
+	signal count : integer := 0; -- x pixel pos
+	signal line_count : integer := 0; -- y pixel pos
 		
 begin
 

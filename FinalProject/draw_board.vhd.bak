@@ -29,16 +29,16 @@ begin
 		if rising_edge(clk) then
 			if rst = '1' then
 				x_pixel_pos <= 0;
-				x_pixel_pos <= 0;
+				line_x_pixel_pos <= 0;
 			else
 				if pixel_en = '1' then
 					x_pixel_pos <= x_pixel_pos + 1;
 					if x_pixel_pos = 639 then
 						x_pixel_pos <= 0;
-						x_pixel_pos <= x_pixel_pos + 1;
+						line_x_pixel_pos <= line_x_pixel_pos + 1;
 					end if;
-					if x_pixel_pos = 480 then
-						x_pixel_pos <= 0;
+					if line_x_pixel_pos = 480 then
+						line_x_pixel_pos <= 0;
 					end if;
 				end if;
 				
