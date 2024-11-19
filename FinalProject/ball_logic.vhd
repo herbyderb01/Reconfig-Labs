@@ -8,23 +8,25 @@ entity ball_logic is
 		clk 	 : in std_logic;
 		xposb 	 : out integer;
 		yposb 	 : out integer;
+		frame_end: in std_logic;
 		Vx 		 : in integer;
 		Vy 		 : in integer
 	);
 end;
 
 architecture behavioral of ball_logic is
-	signal xposb_internal : integer := 320;
+	signal xposb_internal : integer := 230;
 	signal yposb_internal : integer := 60;
 begin
 	
 	process(clk) 
 	begin
-		if rising_edge(clk) then
+		if rising_edge(clk) and frame_end = '1' then
 			xposb_internal <= xposb_internal + Vx;
-			yposb_internal <= yposb_internal - Vy;
+			yposb_internal <= yposb_internal + Vy;
+			xposb <= xposb_internal;
+			yposb <= yposb_internal;
 		end if;
-		xposb <= xposb_internal;
-		yposb <= yposb_internal;
 	end process;
+
 end behavioral;

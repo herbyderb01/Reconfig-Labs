@@ -52,10 +52,11 @@ architecture component_list of FinalProject is
 			pixel_x    : in  STD_LOGIC_VECTOR(9 downto 0);  -- Pixel X coordinate
 			pixel_y    : in  STD_LOGIC_VECTOR(9 downto 0);  -- Pixel Y coordinate
 			pixel_en   : in  STD_LOGIC;                     -- Pixel enable signal
-			-- ball_x     : in  integer;                        -- Ball X position
-			-- ball_y     : in  integer;                        -- Ball Y position
+			ball_x     : in  integer;                        -- Ball X position
+			ball_y     : in  integer;                        -- Ball Y position
 			paddle_1_y : in  integer;                        -- Paddle 1 Y position
 			paddle_2_y : in  integer;                        -- Paddle 2 Y position
+			frame_end  : out std_logic;
 			board_color : out STD_LOGIC_VECTOR(11 downto 0)  -- RGB color output for each pixel
 		);
     end component;
@@ -66,6 +67,33 @@ architecture component_list of FinalProject is
 			c0		: out STD_LOGIC
 		);
 	end component PLL_25M;
+
+	component ball_logic 
+		port (
+		    clk 	 : in std_logic;
+			xposb 	 : out integer;
+			yposb 	 : out integer;
+			frame_end: in std_logic;
+			Vx 		 : in integer;
+			Vy 		 : in integer
+		);
+	end component ball_logic;
+	
+	component collision_detector 
+		port (
+			clk 	 : in std_logic;
+			xposb 	 : in integer;
+			yposb 	 : in integer;
+			yposbmp1 : in integer;
+			yposbmp2 : in integer;
+			frame_end: in std_logic;
+			p1_points: out integer;
+			p2_points: out integer;
+			Vx 		 : out integer;
+			Vy 		 : out integer
+		);
+	end component collision_detector;
+
 	
 	
 	signal key0_l : std_logic;
@@ -90,6 +118,13 @@ architecture component_list of FinalProject is
 	signal ball_y		: integer; -- Ball Y position
 	signal paddle_1_y		: integer; -- Paddle 1 Y position
 	signal paddle_2_y		: integer; -- Paddle 2 Y position
+
+	-- Collision Signals
+	signal p1_points		: integer; -- Player 1 Score
+	signal p2_points		: integer; -- Player 2 Score
+	signal Vx				: integer; -- Ball Velocity x direction
+	signal Vy				: integer; -- Ball Velocity y direction
+	signal frame_end		: std_logic;
 
 begin
 	-- Reset the game button
@@ -128,10 +163,11 @@ begin
             pixel_x    => pixel_x,
             pixel_y    => pixel_y,
             pixel_en   => pixel_en,
-            -- ball_x     => ball_x,
-            -- ball_y     => ball_y,
+            ball_x     => ball_x,
+            ball_y     => ball_y,
             paddle_1_y => paddle_1_y,
             paddle_2_y => paddle_2_y,
+			frame_end => frame_end,
             board_color => board_color
         );
 
@@ -140,6 +176,31 @@ begin
 			inclk0	 => MAX10_CLK1_50,
 			c0	 => vga_clk
 		);
+
+	ball : ball_logic
+		port map(
+			clk => vga_clk,
+			xposb => ball_x,
+			yposb => ball_y,
+			frame_end => frame_end,
+			Vx => Vx,
+			Vy => Vy
+		);
+		
+	boom : collision_detector
+		port map(
+			clk => vga_clk,
+			xposb => ball_x,
+			yposb => ball_y,
+			yposbmp1 => paddle_1_y,
+			yposbmp2 => paddle_2_y,
+			frame_end => frame_end,
+			p1_points => p1_points,
+			p2_points => p2_points,
+			Vx => Vx,
+			Vy => Vy
+		);
+
 
 	VGA_R <= board_color(11 downto 8);
 	VGA_G <= board_color(7 downto 4);

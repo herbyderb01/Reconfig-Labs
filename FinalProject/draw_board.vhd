@@ -9,10 +9,11 @@ entity draw_board is
 		pixel_x    : in  STD_LOGIC_VECTOR(9 downto 0);  -- Pixel X coordinate
 		pixel_y    : in  STD_LOGIC_VECTOR(9 downto 0);  -- Pixel Y coordinate
 		pixel_en   : in  STD_LOGIC;                     -- Pixel enable signal
-		-- ball_x     : in  integer;                        -- Ball X position
-		-- ball_y     : in  integer;                        -- Ball Y position
+		ball_x     : in  integer;                        -- Ball X position
+		ball_y     : in  integer;                        -- Ball Y position
 		paddle_1_y : in  integer;                        -- Paddle 1 Y position
 		paddle_2_y : in  integer;                        -- Paddle 2 Y position
+		frame_end  : out std_logic;
 		board_color : out STD_LOGIC_VECTOR(11 downto 0)  -- RGB color output for each pixel
 	);
 end draw_board;
@@ -47,8 +48,8 @@ architecture Behavioral of draw_board is
 	-- segments(0): Middle
 
 	-- Testing Signals
-	signal ball_x : integer := 320;
-	signal ball_y : integer := 60;
+	-- signal ball_x : integer := 320;
+	-- signal ball_y : integer := 60;
 
 	signal x_pixel_pos : integer := 0; -- x pixel pos
 	signal y_pixel_pos : integer := 0; -- y pixel pos
@@ -58,6 +59,7 @@ begin
 	process(clk)
 	begin
 		if rising_edge(clk) then
+			frame_end <= '0';
 			if rst = '1' then
 				x_pixel_pos <= 0;
 				y_pixel_pos <= 0;
@@ -70,6 +72,7 @@ begin
 					end if;
 					if y_pixel_pos = 480 then
 						y_pixel_pos <= 0;
+						frame_end <= '1';
 					end if;
 				end if;
 				
