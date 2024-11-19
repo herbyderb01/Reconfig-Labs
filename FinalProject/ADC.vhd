@@ -3,13 +3,11 @@ use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
 entity ADC is
-	-- generic (
-	-- 	N : integer := 10000000
-	-- );
 	port (
 		clk : in std_logic;
 		btn : in std_logic;
-		output : out std_logic_vector(11 downto 0)
+		output1 : out std_logic_vector(11 downto 0);
+		output2 : out std_logic_vector(11 downto 0)
 	);
 end;
 		
@@ -40,13 +38,6 @@ architecture counter of ADC is
 			locked					: OUT STD_LOGIC 
 		);
 	end component PLL_10M;
-
-	component PLL_25M
-		port (
-			inclk0	: in STD_LOGIC;
-			c0		: out STD_LOGIC
-		);
-	end component PLL_25M;
 
 	signal s_clock_clk              : std_logic;
 	-- signal s_reset_sink_reset_n     : std_logic;
@@ -94,26 +85,15 @@ begin
 		locked	 => s_adc_pll_locked_export
 	);
 
-	PLL_25M_inst : PLL_25M 
-	port map (
-		inclk0	 => MAX10_CLK1_50,
-		c0	 => vga_clk
-	);
-
 	proc1: process(clk)
 	begin
-		if rising_edge(clk) then
+		if rising_edge(clk) and frame_end = '1' then -- need to fix this to switch between two channels
 			if btn = '0' then
-				output <= (others => '0');
-				count <= 0;
+				output1 <= (others => '0');
+				output2 <= (others => '0');
 			elsif s_response_valid = '1' then
-				temp_Data <= s_response_data;
-			end if;
-			if count = 10000000 then
-				output <= temp_Data;
-				count <= 0;
-			else 
-				count <= count + 1;
+				output1 <= s_response_data; 
+				output2 <= s_response_data;
 			end if;
 		end if;
 	end process proc1;

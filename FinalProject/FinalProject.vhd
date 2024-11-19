@@ -94,8 +94,18 @@ architecture component_list of FinalProject is
 		);
 	end component collision_detector;
 
-	
-	
+	component paddle_control
+		port (
+			clk				: in std_logic;
+			rst_btn			: in std_logic;
+			xposb			: out integer;
+			yposb			: out integer;
+			frame_end		: in std_logic;
+			paddle_1_y		: out integer;
+			paddle_2_y		: out integer
+		);
+	end component paddle_control;
+		
 	signal key0_l : std_logic;
 	signal key1_l : std_logic;
 	signal pressed : std_logic;
@@ -201,8 +211,18 @@ begin
 			p2_points => p2_points,
 			Vx => Vx,
 			Vy => Vy
+			);
+			
+	ball : ball_logic
+		port map(
+			clk => vga_clk,
+			rst => vga_clk,
+			xposb => ball_x,
+			yposb => ball_y,
+			frame_end => frame_end,
+			paddle_1_y => paddle_1_y,
+			paddle_2_y => paddle_1_y
 		);
-
 
 	VGA_R <= board_color(11 downto 8);
 	VGA_G <= board_color(7 downto 4);
