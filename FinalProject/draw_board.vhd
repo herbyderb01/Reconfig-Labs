@@ -149,19 +149,17 @@ begin
 				board_color <= "111111111111";  -- White color for the ball
 			end if;
 			
-			-- -- Draw Paddle 1 (40x5 brown or orange)
-			-- if (x_pixel_pos >= 270 and x_pixel_pos < 310) and  -- TODO: Change to center of ball for 0,0 x,y cordinate
-			--    (y_pixel_pos >= paddle_1_y and y_pixel_pos < paddle_1_y + 5) then
-			--     board_color <= "101010000000";  -- Paddle 1 color (dark brown/orange)
-			-- end if;
+			-- Draw Paddle 1 (40x5 brown or orange)
+			if (x_pixel_pos >= 40 and x_pixel_pos < 45) and  -- TODO: Change to center of ball for 0,0 x,y cordinate
+			   (y_pixel_pos >= paddle_1_y and y_pixel_pos < paddle_1_y + 40) then
+			    board_color <= "111101000000";  -- Paddle 1 color (dark brown/orange)
+			end if;
 
-			-- -- Draw Paddle 2 (40x5 brown or orange)
-			-- if (x_pixel_pos >= 330 and x_pixel_pos < 370)   -- TODO: Change to center of ball for 0,0 x,y cordinate
-			--    (y_pixel_pos >= paddle_2_y and y_pixel_pos < paddle_2_y + 5) then
-			--     board_color <= "101010000000";  -- Paddle 2 color (dark brown/orange)
-			-- end if;
-
-			-- Add additional logic for other game elements like obstacles, score display, etc.
+			-- Draw Paddle 2 (40x5 brown or orange)
+			if (x_pixel_pos >= 595 and x_pixel_pos < 600) and  -- TODO: Change to center of ball for 0,0 x,y cordinate
+			   (y_pixel_pos >= paddle_2_y and y_pixel_pos < paddle_2_y + 40) then
+			    board_color <= "111101000000";  -- Paddle 2 color (dark brown/orange)
+			end if;
 			
 			-- DRAW SCORES
 			-- Draw the top segment

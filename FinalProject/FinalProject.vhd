@@ -165,8 +165,10 @@ begin
             pixel_en   => pixel_en,
             ball_x     => ball_x,
             ball_y     => ball_y,
-            paddle_1_y => paddle_1_y,
-            paddle_2_y => paddle_2_y,
+            -- paddle_1_y => paddle_1_y,
+            paddle_1_y => 160,
+            -- paddle_2_y => paddle_2_y,
+            paddle_2_y => 160,
 			frame_end => frame_end,
             board_color => board_color
         );
