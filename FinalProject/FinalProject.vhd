@@ -52,8 +52,8 @@ architecture component_list of FinalProject is
 			pixel_x    : in  STD_LOGIC_VECTOR(9 downto 0);  -- Pixel X coordinate
 			pixel_y    : in  STD_LOGIC_VECTOR(9 downto 0);  -- Pixel Y coordinate
 			pixel_en   : in  STD_LOGIC;                     -- Pixel enable signal
-			ball_x     : in  integer;                        -- Ball X position
-			ball_y     : in  integer;                        -- Ball Y position
+			-- ball_x     : in  integer;                        -- Ball X position
+			-- ball_y     : in  integer;                        -- Ball Y position
 			paddle_1_y : in  integer;                        -- Paddle 1 Y position
 			paddle_2_y : in  integer;                        -- Paddle 2 Y position
 			board_color : out STD_LOGIC_VECTOR(11 downto 0)  -- RGB color output for each pixel
@@ -128,8 +128,8 @@ begin
             pixel_x    => pixel_x,
             pixel_y    => pixel_y,
             pixel_en   => pixel_en,
-            ball_x     => ball_x,
-            ball_y     => ball_y,
+            -- ball_x     => ball_x,
+            -- ball_y     => ball_y,
             paddle_1_y => paddle_1_y,
             paddle_2_y => paddle_2_y,
             board_color => board_color
