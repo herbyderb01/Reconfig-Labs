@@ -29,16 +29,16 @@ begin
 		if rising_edge(clk) then
 			if rst = '1' then
 				x_pixel_pos <= 0;
-				x_pixel_pos <= 0;
+				y_pixel_pos <= 0;
 			else
 				if pixel_en = '1' then
 					x_pixel_pos <= x_pixel_pos + 1;
 					if x_pixel_pos = 639 then
 						x_pixel_pos <= 0;
-						x_pixel_pos <= x_pixel_pos + 1;
+						y_pixel_pos <= y_pixel_pos + 1;
 					end if;
-					if x_pixel_pos = 480 then
-						x_pixel_pos <= 0;
+					if y_pixel_pos = 480 then
+						y_pixel_pos <= 0;
 					end if;
 				end if;
 				
@@ -55,13 +55,46 @@ begin
 		if pixel_en = '1' then
 			-- Draw the playing field (600x320) area
 			if (x_pixel_pos >= 20 and x_pixel_pos < 620) and
-			   (y_pixel_pos >= 20 and y_pixel_pos < 340) then
-				-- Drawing the boundary (white)
-				if (x_pixel_pos = 20 or x_pixel_pos = 619 or
-					y_pixel_pos = 20 or y_pixel_pos = 339) then
+			(y_pixel_pos >= 20 and y_pixel_pos < 340) then
+				-- Drawing the boundary (3-pixel-wide white border)
+				if (x_pixel_pos >= 20 and x_pixel_pos < 23) or  -- Left border
+					(x_pixel_pos >= 617 and x_pixel_pos < 620) then  -- Right border
+						if (y_pixel_pos >= 145 and y_pixel_pos < 215) then
+							board_color <= "000000000000";  -- Black for goals
+						else 
+							board_color <= "111111111111";  -- White color for boundary
+						end if;
+					elsif (y_pixel_pos >= 20 and y_pixel_pos < 23) or  -- Top border
+					(y_pixel_pos >= 337 and y_pixel_pos < 340) then  -- Bottom border
+					
 					board_color <= "111111111111";  -- White color for boundary
+				else
+				-- Inside the playing field (optional color logic)
+				board_color <= "000000000000";  -- Black or any other color for the inside
 				end if;
 			end if;
+
+			-- Drawing or static obstacle:
+			if (x_pixel_pos >= 310 and x_pixel_pos < 330) and
+			   (y_pixel_pos >= 170 and y_pixel_pos < 190) then
+				board_color <= "111100000000";  -- Obstacle (red)
+			end if;
+
+			-- Draw upper 4 red boxes, each 20x20 pixels, spaced 60 pixels apart from left to right
+			for i in 0 to 3 loop
+				if (x_pixel_pos >= (175 + (i * 90)) and x_pixel_pos < (195 + (i * 90))) and
+				(y_pixel_pos >= 100 and y_pixel_pos < 120) then
+					board_color <= "111100000000";  -- Obstacle (red)
+				end if;
+			end loop;
+
+			-- Draw lower 4 red boxes, each 20x20 pixels, spaced 60 pixels apart from left to right
+			for i in 0 to 3 loop
+				if (x_pixel_pos >= (175 + (i * 90)) and x_pixel_pos < (195 + (i * 90))) and
+				(y_pixel_pos >= 240 and y_pixel_pos < 260) then
+					board_color <= "111100000000";  -- Obstacle (red)
+				end if;
+			end loop;
 
 			-- -- Draw the ball (10x10 white square)
 			-- if (x_pixel_pos >= ball_x and x_pixel_pos < ball_x + 10) and  -- TODO: Change to center of ball for 0,0 x,y cordinate
@@ -83,11 +116,7 @@ begin
 
 			-- Add additional logic for other game elements like obstacles, score display, etc.
 			
-			-- For example, drawing a simple score or static obstacle:
-			if (x_pixel_pos >= 100 and x_pixel_pos < 120) and
-			   (y_pixel_pos >= 50 and y_pixel_pos < 70) then
-				board_color <= "111100000000";  -- Example obstacle or score section (red)
-			end if;
+
 		else
 			board_color <= (others => '0');
 		end if;
