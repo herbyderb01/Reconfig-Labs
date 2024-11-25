@@ -15,7 +15,7 @@ entity ball_logic is
 end;
 
 architecture behavioral of ball_logic is
-	signal xposb_internal : integer := 230;
+	signal xposb_internal : integer := 320;
 	signal yposb_internal : integer := 60;
 begin
 	
