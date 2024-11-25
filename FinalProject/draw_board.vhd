@@ -35,8 +35,10 @@ architecture Behavioral of draw_board is
 	constant P2_DIGIT_TOP    : integer := 390;  -- Y-coordinate of the digit's top-left corner
 
 	-- Signal for active segments
-	signal segments : std_logic_vector(6 downto 0);  -- 7-segment encoding
-	signal case_num    : integer range 0 to 5;  -- The number to display
+	signal segments_p1 : std_logic_vector(6 downto 0);  -- 7-segment encoding
+	signal score_num_p1    : integer range 0 to 5;  -- The number to display
+	signal segments_p2 : std_logic_vector(6 downto 0);  -- 7-segment encoding
+	signal score_num_p2    : integer range 0 to 5;  -- The number to display
 
 	-- Segment mapping:
 	-- segments(6): Top
@@ -80,19 +82,33 @@ begin
 		end if;
 	end process;
 
-	-- -- Case statement to control active segments
-	-- process(case_num)
-	-- begin
-	-- 	case case_num is
-	-- 		when 0 => segments <= "1111110";  -- 0
-	-- 		when 1 => segments <= "0110000";  -- 1
-	-- 		when 2 => segments <= "1101101";  -- 2
-	-- 		when 3 => segments <= "1111001";  -- 3
-	-- 		when 4 => segments <= "0110011";  -- 4
-	-- 		when 5 => segments <= "1011011";  -- 5
-	-- 		when others => segments <= "0000000";  -- Blank (default)
-	-- 	end case;
-	-- end process;
+	-- Case statement to control active segments of p1
+	process(score_num_p1)
+	begin
+		case score_num_p1 is
+			when 0 => segments_p1 <= "1111110";  -- 0
+			when 1 => segments_p1 <= "0110000";  -- 1
+			when 2 => segments_p1 <= "1101101";  -- 2
+			when 3 => segments_p1 <= "1111001";  -- 3
+			when 4 => segments_p1 <= "0110011";  -- 4
+			when 5 => segments_p1 <= "1011011";  -- 5
+			when others => segments_p1 <= "0000000";  -- Blank (default)
+		end case;
+	end process;
+
+	-- Case statement to control active segments of p2
+	process(score_num_p2)
+	begin
+		case score_num_p2 is
+			when 0 => segments_p2 <= "1111110";  -- 0
+			when 1 => segments_p2 <= "0110000";  -- 1
+			when 2 => segments_p2 <= "1101101";  -- 2
+			when 3 => segments_p2 <= "1111001";  -- 3
+			when 4 => segments_p2 <= "0110011";  -- 4
+			when 5 => segments_p2 <= "1011011";  -- 5
+			when others => segments_p2 <= "0000000";  -- Blank (default)
+		end case;
+	end process;
 
 	process(clk, pixel_en)
 	begin
@@ -161,26 +177,23 @@ begin
 			    board_color <= "111101000000";  -- Paddle 2 color (dark brown/orange)
 			end if;
 			
-			-- DRAW SCORES
+			--------------------------------- DRAW SCORES P1 ---------------------------------
 			-- Draw the top segment
-			-- if segments(6) = '1' and
-			if 
+			if segments_p1(6) = '1' and
 			x_pixel_pos >= P1_DIGIT_LEFT and x_pixel_pos < P1_DIGIT_LEFT + SEGMENT_W and
 			y_pixel_pos >= P1_DIGIT_TOP and y_pixel_pos < P1_DIGIT_TOP + SEGMENT_H then
 				board_color <= "111111111111";  -- White
 			end if;
 
 			-- Draw the top-right segment
-			-- if segments(5) = '1' and
-			if
+			if segments_p1(5) = '1' and
 			x_pixel_pos >= P1_DIGIT_LEFT + SEGMENT_W - SEGMENT_H and x_pixel_pos < P1_DIGIT_LEFT + SEGMENT_W and
 			y_pixel_pos >= P1_DIGIT_TOP + SEGMENT_H and y_pixel_pos < P1_DIGIT_TOP + SEGMENT_H + SEGMENT_V_H then
 				board_color <= "111111111111";  -- White
 			end if;
 
 			-- Draw the bottom-right segment
-			-- if segments(4) = '1' and
-			if
+			if segments_p1(4) = '1' and
 			x_pixel_pos >= P1_DIGIT_LEFT + SEGMENT_W - SEGMENT_H and x_pixel_pos < P1_DIGIT_LEFT + SEGMENT_W and
 			y_pixel_pos >= P1_DIGIT_TOP + SEGMENT_H + SEGMENT_V_H + SEGMENT_GAP and
 			y_pixel_pos < P1_DIGIT_TOP + 2 * SEGMENT_H + 2 * SEGMENT_V_H + SEGMENT_GAP then
@@ -188,8 +201,7 @@ begin
 			end if;
 
 			-- Draw the bottom segment
-			-- if segments(3) = '1' and
-			if
+			if segments_p1(3) = '1' and
 			x_pixel_pos >= P1_DIGIT_LEFT and x_pixel_pos < P1_DIGIT_LEFT + SEGMENT_W and
 			y_pixel_pos >= P1_DIGIT_TOP + 2 * SEGMENT_H + 2 * SEGMENT_V_H + 2 * SEGMENT_GAP and
 			y_pixel_pos < P1_DIGIT_TOP + 3 * SEGMENT_H + 2 * SEGMENT_V_H + 2 * SEGMENT_GAP then
@@ -197,8 +209,7 @@ begin
 			end if;
 
 			-- Draw the bottom-left segment
-			-- if segments(2) = '1' and
-			if
+			if segments_p1(2) = '1' and
 			x_pixel_pos >= P1_DIGIT_LEFT and x_pixel_pos < P1_DIGIT_LEFT + SEGMENT_H and
 			y_pixel_pos >= P1_DIGIT_TOP + SEGMENT_H + SEGMENT_V_H + SEGMENT_GAP and
 			y_pixel_pos < P1_DIGIT_TOP + 2 * SEGMENT_H + 2 * SEGMENT_V_H + SEGMENT_GAP then
@@ -206,19 +217,71 @@ begin
 			end if;
 
 			-- Draw the top-left segment
-			-- if segments(1) = '1' and
-			if
+			if segments_p1(1) = '1' and
 			x_pixel_pos >= P1_DIGIT_LEFT and x_pixel_pos < P1_DIGIT_LEFT + SEGMENT_H and
 			y_pixel_pos >= P1_DIGIT_TOP + SEGMENT_H and y_pixel_pos < P1_DIGIT_TOP + SEGMENT_H + SEGMENT_V_H then
 				board_color <= "111111111111";  -- White
 			end if;
 
 			-- Draw the middle segment
-			-- if segments(0) = '1' and
-			if
+			if segments_p1(0) = '1' and
 			x_pixel_pos >= P1_DIGIT_LEFT and x_pixel_pos < P1_DIGIT_LEFT + SEGMENT_W and
 			y_pixel_pos >= P1_DIGIT_TOP + SEGMENT_H + SEGMENT_V_H + SEGMENT_GAP and
 			y_pixel_pos < P1_DIGIT_TOP + 2 * SEGMENT_H + SEGMENT_V_H + SEGMENT_GAP then
+				board_color <= "111111111111";  -- White
+			end if;
+
+			--------------------------------- DRAW SCORES P2 ---------------------------------
+			-- Draw the top segment
+			if segments_p2(6) = '1' and
+			x_pixel_pos >= P2_DIGIT_LEFT and x_pixel_pos < P2_DIGIT_LEFT + SEGMENT_W and
+			y_pixel_pos >= P2_DIGIT_TOP and y_pixel_pos < P2_DIGIT_TOP + SEGMENT_H then
+				board_color <= "111111111111";  -- White
+			end if;
+
+			-- Draw the top-right segment
+			if segments_p2(5) = '1' and
+			x_pixel_pos >= P2_DIGIT_LEFT + SEGMENT_W - SEGMENT_H and x_pixel_pos < P2_DIGIT_LEFT + SEGMENT_W and
+			y_pixel_pos >= P2_DIGIT_TOP + SEGMENT_H and y_pixel_pos < P2_DIGIT_TOP + SEGMENT_H + SEGMENT_V_H then
+				board_color <= "111111111111";  -- White
+			end if;
+
+			-- Draw the bottom-right segment
+			if segments_p2(4) = '1' and
+			x_pixel_pos >= P2_DIGIT_LEFT + SEGMENT_W - SEGMENT_H and x_pixel_pos < P2_DIGIT_LEFT + SEGMENT_W and
+			y_pixel_pos >= P2_DIGIT_TOP + SEGMENT_H + SEGMENT_V_H + SEGMENT_GAP and
+			y_pixel_pos < P2_DIGIT_TOP + 2 * SEGMENT_H + 2 * SEGMENT_V_H + SEGMENT_GAP then
+				board_color <= "111111111111";  -- White
+			end if;
+
+			-- Draw the bottom segment
+			if segments_p2(3) = '1' and
+			x_pixel_pos >= P2_DIGIT_LEFT and x_pixel_pos < P2_DIGIT_LEFT + SEGMENT_W and
+			y_pixel_pos >= P2_DIGIT_TOP + 2 * SEGMENT_H + 2 * SEGMENT_V_H + 2 * SEGMENT_GAP and
+			y_pixel_pos < P2_DIGIT_TOP + 3 * SEGMENT_H + 2 * SEGMENT_V_H + 2 * SEGMENT_GAP then
+				board_color <= "111111111111";  -- White
+			end if;
+
+			-- Draw the bottom-left segment
+			if segments_p2(2) = '1' and
+			x_pixel_pos >= P2_DIGIT_LEFT and x_pixel_pos < P2_DIGIT_LEFT + SEGMENT_H and
+			y_pixel_pos >= P2_DIGIT_TOP + SEGMENT_H + SEGMENT_V_H + SEGMENT_GAP and
+			y_pixel_pos < P2_DIGIT_TOP + 2 * SEGMENT_H + 2 * SEGMENT_V_H + SEGMENT_GAP then
+				board_color <= "111111111111";  -- White
+			end if;
+
+			-- Draw the top-left segment
+			if segments_p2(1) = '1' and
+			x_pixel_pos >= P2_DIGIT_LEFT and x_pixel_pos < P2_DIGIT_LEFT + SEGMENT_H and
+			y_pixel_pos >= P2_DIGIT_TOP + SEGMENT_H and y_pixel_pos < P2_DIGIT_TOP + SEGMENT_H + SEGMENT_V_H then
+				board_color <= "111111111111";  -- White
+			end if;
+
+			-- Draw the middle segment
+			if segments_p2(0) = '1' and
+			x_pixel_pos >= P2_DIGIT_LEFT and x_pixel_pos < P2_DIGIT_LEFT + SEGMENT_W and
+			y_pixel_pos >= P2_DIGIT_TOP + SEGMENT_H + SEGMENT_V_H + SEGMENT_GAP and
+			y_pixel_pos < P2_DIGIT_TOP + 2 * SEGMENT_H + SEGMENT_V_H + SEGMENT_GAP then
 				board_color <= "111111111111";  -- White
 			end if;
 

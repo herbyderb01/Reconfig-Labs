@@ -60,30 +60,30 @@ begin
 			end if;
 			
 			--Boxes Y DIR
-			-- plut 15 is 10 for box's height plus 5 for hit box
-			-- top of upper rox box
-			if yposb >= BOX_YPOS_UPPER - 25 and yposb <= BOX_YPOS_UPPER - 20  and sig_Vy > 0 then 
+			-- plus 15 is 10 for box's height plus 3 for hit box
+			-- top of upper row box
+			if yposb >= BOX_YPOS_UPPER - 18 and yposb <= BOX_YPOS_UPPER - 13  and sig_Vy > 0 then 
 				for i in 0 to 3 loop
 					if xposb >= BOX_XPOS_RP + i * X_BOS_DIST - 15 AND xposb <= BOX_XPOS_RP + i * X_BOS_DIST  + 15 then
 						sig_Vy <= -sig_Vy;
 					end if;
 				end loop;
 			-- bottom of upper row boxes
-			elsif yposb <= BOX_YPOS_UPPER + 25 and yposb >= BOX_YPOS_UPPER + 20 and sig_Vy < 0 then
+			elsif yposb <= BOX_YPOS_UPPER + 18 and yposb >= BOX_YPOS_UPPER + 13 and sig_Vy < 0 then
 				for i in 0 to 3 loop
 					if xposb >= BOX_XPOS_RP + i * X_BOS_DIST  - 15 AND xposb <= BOX_XPOS_RP + i * X_BOS_DIST  + 15 then
 						sig_Vy <= -sig_Vy;
 					end if;
 				end loop;
 			-- top of bottom row boxes
-			elsif yposb >= BOX_YPOS_LOWER - 25 and yposb <= BOX_YPOS_LOWER - 20 and sig_Vy > 0 then 
+			elsif yposb >= BOX_YPOS_LOWER - 18 and yposb <= BOX_YPOS_LOWER - 13 and sig_Vy > 0 then 
 				for i in 0 to 3 loop
 					if xposb >= BOX_XPOS_RP + i * X_BOS_DIST  - 15 AND xposb <= BOX_XPOS_RP + i * X_BOS_DIST  + 15 then
 						sig_Vy <= -sig_Vy;
 					end if;
 				end loop;
 			-- bottom of bottom row boxes
-			elsif yposb <= BOX_YPOS_LOWER + 25 and yposb >= BOX_YPOS_LOWER + 20 and sig_Vy < 0 then
+			elsif yposb <= BOX_YPOS_LOWER + 18 and yposb >= BOX_YPOS_LOWER + 13 and sig_Vy < 0 then
 				for i in 0 to 3 loop
 					if xposb >= BOX_XPOS_RP + i * X_BOS_DIST  - 15 AND xposb <= BOX_XPOS_RP + i * X_BOS_DIST  + 15 then
 						sig_Vy <= -sig_Vy;
@@ -95,7 +95,7 @@ begin
 					sig_Vy <= -sig_Vy;
 				end if;
 			-- bottom of middle box
-			elsif yposb <= BOX_YPOS_MIDDLE + 25 and yposb >= BOX_YPOS_MIDDLE + 20 and sig_Vy < 0 then
+			elsif yposb <= BOX_YPOS_MIDDLE + 18 and yposb >= BOX_YPOS_MIDDLE + 13 and sig_Vy < 0 then
 				if xposb >= BOX_XPOS_MID - 15 AND xposb <= BOX_XPOS_MID + 15 then
 					sig_Vy <= -sig_Vy;
 				end if;
@@ -103,38 +103,36 @@ begin
 			
 			--Boxes X DIR
 			--upper row
-			if yposb <= BOX_YPOS_UPPER + 10 and yposb >= BOX_YPOS_UPPER - 10 then 
+			if yposb <= BOX_YPOS_UPPER + 15 and yposb >= BOX_YPOS_UPPER - 15 then 
 				for i in 0 to 3 loop
 					--Left side
-					if xposb >= BOX_XPOS_RP + i * X_BOS_DIST - 25 AND xposb <= BOX_XPOS_RP + i * X_BOS_DIST  - 20 and sig_Vx > 0 then
+					if xposb >= BOX_XPOS_RP + i * X_BOS_DIST - 18 AND xposb <= BOX_XPOS_RP + i * X_BOS_DIST  - 15 and sig_Vx > 0 then
 						sig_Vx <= -sig_Vx;
 					--Right side
-					elsif xposb <= BOX_XPOS_RP + i * X_BOS_DIST + 25 AND xposb >= BOX_XPOS_RP + i * X_BOS_DIST  + 20 and sig_Vx < 0 then
+					elsif xposb <= BOX_XPOS_RP + i * X_BOS_DIST + 18 AND xposb >= BOX_XPOS_RP + i * X_BOS_DIST  + 15 and sig_Vx < 0 then
 						sig_Vx <= -sig_Vx;
 					end if;
 				end loop;
 			--bottom row
-			elsif yposb <= BOX_YPOS_LOWER + 10 and yposb >= BOX_YPOS_LOWER - 10 then 
+			elsif yposb <= BOX_YPOS_LOWER + 15 and yposb >= BOX_YPOS_LOWER - 15 then 
 				for i in 0 to 3 loop
 					--Left side
-					if xposb >= BOX_XPOS_RP + i * X_BOS_DIST - 25 AND xposb <= BOX_XPOS_RP + i * X_BOS_DIST  - 20 and sig_Vx > 0 then
+					if xposb >= BOX_XPOS_RP + i * X_BOS_DIST - 18 AND xposb <= BOX_XPOS_RP + i * X_BOS_DIST  - 15 and sig_Vx > 0 then
 						sig_Vx <= -sig_Vx;
 					--Right side
-					elsif xposb <= BOX_XPOS_RP + i * X_BOS_DIST + 25 AND xposb >= BOX_XPOS_RP + i * X_BOS_DIST  + 20 and sig_Vx < 0 then
+					elsif xposb <= BOX_XPOS_RP + i * X_BOS_DIST + 18 AND xposb >= BOX_XPOS_RP + i * X_BOS_DIST  + 15 and sig_Vx < 0 then
 						sig_Vx <= -sig_Vx;
 					end if;
 				end loop;
 			--middle box
-			elsif yposb <= BOX_YPOS_MIDDLE + 10 and yposb >= BOX_YPOS_MIDDLE - 10 then 
-				for i in 0 to 3 loop
-					--Left side
-					if xposb >= BOX_XPOS_MID + i * X_BOS_DIST - 25 AND xposb <= BOX_XPOS_MID + i * X_BOS_DIST  - 20 and sig_Vx > 0 then
-						sig_Vx <= -sig_Vx;
-					--Right side
-					elsif xposb <= BOX_XPOS_MID + i * X_BOS_DIST + 25 AND xposb >= BOX_XPOS_MID + i * X_BOS_DIST  + 20 and sig_Vx < 0 then
-						sig_Vx <= -sig_Vx;
-					end if;
-				end loop;
+			elsif yposb <= BOX_YPOS_MIDDLE + 15 and yposb >= BOX_YPOS_MIDDLE - 15 then 
+				-- Left side
+				if xposb >= BOX_XPOS_MID - 18 AND xposb <= BOX_XPOS_MID - 15 and sig_Vx > 0 then
+					sig_Vx <= -sig_Vx;
+				-- Right side
+				elsif xposb <= BOX_XPOS_MID + 18 AND xposb >= BOX_XPOS_MID + 15 and sig_Vx < 0 then
+					sig_Vx <= -sig_Vx;
+				end if;
 			end if;	
 		end if;
 		--bumper collision logic 

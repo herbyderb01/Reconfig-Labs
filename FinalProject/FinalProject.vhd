@@ -213,16 +213,16 @@ begin
 			Vy => Vy
 			);
 			
-	ball : ball_logic
-		port map(
-			clk => vga_clk,
-			rst => vga_clk,
-			xposb => ball_x,
-			yposb => ball_y,
-			frame_end => frame_end,
-			paddle_1_y => paddle_1_y,
-			paddle_2_y => paddle_1_y
-		);
+	-- ball : ball_logic
+	-- 	port map(
+	-- 		clk => vga_clk,
+	-- 		rst => vga_clk,
+	-- 		xposb => ball_x,
+	-- 		yposb => ball_y,
+	-- 		frame_end => frame_end,
+	-- 		paddle_1_y => paddle_1_y,
+	-- 		paddle_2_y => paddle_1_y
+	-- 	);
 
 	VGA_R <= board_color(11 downto 8);
 	VGA_G <= board_color(7 downto 4);
