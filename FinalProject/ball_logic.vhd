@@ -18,7 +18,7 @@ architecture behavioral of ball_logic is
 	-- signal xposb_internal : integer := 185;
 	-- signal yposb_internal : integer := 180;
 	signal xposb_internal : integer := 230;
-	signal yposb_internal : integer := 140;
+	signal yposb_internal : integer := 180;
 begin
 	
 	process(clk) 

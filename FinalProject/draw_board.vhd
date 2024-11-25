@@ -13,6 +13,8 @@ entity draw_board is
 		ball_y     : in  integer;                        -- Ball Y position
 		paddle_1_y : in  integer;                        -- Paddle 1 Y position
 		paddle_2_y : in  integer;                        -- Paddle 2 Y position
+		p1_points: in integer;							 -- P1 points
+		p2_points: in integer;							 -- P2 points
 		frame_end  : out std_logic;
 		board_color : out STD_LOGIC_VECTOR(11 downto 0)  -- RGB color output for each pixel
 	);
@@ -31,7 +33,7 @@ architecture Behavioral of draw_board is
 	constant P1_DIGIT_TOP    : integer := 390;  -- Y-coordinate of the digit's top-left corner
 	
 	-- Player 2 Score Position
-	constant P2_DIGIT_LEFT   : integer := 400;  -- X-coordinate of the digit's top-left corner
+	constant P2_DIGIT_LEFT   : integer := 485;  -- X-coordinate of the digit's top-left corner
 	constant P2_DIGIT_TOP    : integer := 390;  -- Y-coordinate of the digit's top-left corner
 
 	-- Signal for active segments
@@ -81,6 +83,27 @@ begin
 			end if;
 		end if;
 	end process;
+
+	process(p1_points, p2_points)
+	begin
+		-- Constrain p1_points to the range 0 to 5
+		if p1_points < 0 then
+			score_num_p1 <= 0;  -- Minimum value
+		elsif p1_points > 5 then
+			score_num_p1 <= 5;  -- Maximum value
+		else
+			score_num_p1 <= p1_points;  -- Within range
+		end if;
+	
+		-- Constrain p2_points to the range 0 to 5
+		if p2_points < 0 then
+			score_num_p2 <= 0;  -- Minimum value
+		elsif p2_points > 5 then
+			score_num_p2 <= 5;  -- Maximum value
+		else
+			score_num_p2 <= p2_points;  -- Within range
+		end if;
+	end process;	
 
 	-- Case statement to control active segments of p1
 	process(score_num_p1)
@@ -137,7 +160,7 @@ begin
 				end if;
 			end if;
 
-			-- Drawing or static obstacle:
+			-- Draw middle box
 			if (x_pixel_pos >= 310 and x_pixel_pos < 330) and
 			   (y_pixel_pos >= 170 and y_pixel_pos < 190) then
 				board_color <= "111100000000";  -- Obstacle (red)

@@ -22,7 +22,7 @@ end;
 
 architecture behavioral of collision_detector is
 	signal sig_Vx : integer := 2;
-	signal sig_Vy : integer := 2;
+	signal sig_Vy : integer := 0;
 	signal sig_p1_points : integer := 0;
 	signal sig_p2_points : integer := 0;
 	constant BOX_YPOS_UPPER : integer := 110;
@@ -48,15 +48,15 @@ begin
 			
 			--left and right walls and goals
 			if xposb >= 610 and sig_Vx > 0 then
-				-- if yposb > 265 and yposb < 335 then
-				-- 	sig_p1_points <= sig_p1_points + 1;
+				if yposb > 145 and yposb < 215 then -- P1 Goal
+					sig_p1_points <= sig_p1_points + 1;
 				sig_Vx <= -sig_Vx;
-				-- end if;
+				end if;
 			elsif xposb <= 30 and sig_Vx < 0 then
-				-- if yposb > 265 and yposb < 335 then
-				-- 	sig_p2_points <= sig_p2_points + 1;
+				if yposb > 145 and yposb < 215 then -- P2 Goal
+					sig_p2_points <= sig_p2_points + 1;
 				sig_Vx <= -sig_Vx;
-				-- end if;
+				end if;
 			end if;
 			
 			--Boxes Y DIR
@@ -125,14 +125,14 @@ begin
 					end if;
 				end loop;
 			--middle box
-			elsif yposb <= BOX_YPOS_MIDDLE + 15 and yposb >= BOX_YPOS_MIDDLE - 15 then 
-				-- Left side
-				if xposb >= BOX_XPOS_MID - 18 AND xposb <= BOX_XPOS_MID - 15 and sig_Vx > 0 then
-					sig_Vx <= -sig_Vx;
-				-- Right side
-				elsif xposb <= BOX_XPOS_MID + 18 AND xposb >= BOX_XPOS_MID + 15 and sig_Vx < 0 then
-					sig_Vx <= -sig_Vx;
-				end if;
+			-- elsif yposb <= BOX_YPOS_MIDDLE + 15 and yposb >= BOX_YPOS_MIDDLE - 15 then 
+			-- 	-- Left side
+			-- 	if xposb >= BOX_XPOS_MID - 18 AND xposb <= BOX_XPOS_MID - 15 and sig_Vx > 0 then
+			-- 		sig_Vx <= -sig_Vx;
+			-- 	-- Right side
+			-- 	elsif xposb <= BOX_XPOS_MID + 18 AND xposb >= BOX_XPOS_MID + 15 and sig_Vx < 0 then
+			-- 		sig_Vx <= -sig_Vx;
+			-- 	end if;
 			end if;	
 		end if;
 		--bumper collision logic 
@@ -141,5 +141,7 @@ begin
 		-- end if;
 		Vx <= sig_Vx;
 		Vy <= sig_Vy;
+		p1_points <= sig_p1_points;
+		p2_points <= sig_p2_points;
 	end process;
 end behavioral;
