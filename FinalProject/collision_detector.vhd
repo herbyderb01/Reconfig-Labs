@@ -21,7 +21,7 @@ end;
 --to account for width and height of ball and other objects
 
 architecture behavioral of collision_detector is
-	signal sig_Vx : integer := 2;
+	signal sig_Vx : integer := -1;
 	signal sig_Vy : integer := 0;
 	signal sig_p1_points : integer := 0;
 	signal sig_p2_points : integer := 0;
@@ -31,6 +31,9 @@ architecture behavioral of collision_detector is
 	constant BOX_YPOS_MIDDLE : integer := 180;
 	constant BOX_XPOS_MID : integer := 320;
 	constant X_BOS_DIST : integer := 90;
+
+	signal paddle_1_y : integer := 160;
+	signal paddle_2_y : integer := 160;
 	
 begin
 	p1_points <= sig_p1_points;
@@ -48,15 +51,15 @@ begin
 			
 			--left and right walls and goals
 			if xposb >= 610 and sig_Vx > 0 then
-				if yposb > 145 and yposb < 215 then -- P1 Goal
-					sig_p1_points <= sig_p1_points + 1;
+				-- if yposb > 145 and yposb < 215 then -- P1 Goal
+				-- 	sig_p1_points <= sig_p1_points + 1;
 				sig_Vx <= -sig_Vx;
-				end if;
+				-- end if;
 			elsif xposb <= 30 and sig_Vx < 0 then
-				if yposb > 145 and yposb < 215 then -- P2 Goal
-					sig_p2_points <= sig_p2_points + 1;
+				-- if yposb > 145 and yposb < 215 then -- P2 Goal
+				-- 	sig_p2_points <= sig_p2_points + 1;
 				sig_Vx <= -sig_Vx;
-				end if;
+				-- end if;
 			end if;
 			
 			--Boxes Y DIR
@@ -125,20 +128,50 @@ begin
 					end if;
 				end loop;
 			--middle box
-			-- elsif yposb <= BOX_YPOS_MIDDLE + 15 and yposb >= BOX_YPOS_MIDDLE - 15 then 
-			-- 	-- Left side
-			-- 	if xposb >= BOX_XPOS_MID - 18 AND xposb <= BOX_XPOS_MID - 15 and sig_Vx > 0 then
-			-- 		sig_Vx <= -sig_Vx;
-			-- 	-- Right side
-			-- 	elsif xposb <= BOX_XPOS_MID + 18 AND xposb >= BOX_XPOS_MID + 15 and sig_Vx < 0 then
-			-- 		sig_Vx <= -sig_Vx;
-			-- 	end if;
+			elsif yposb <= BOX_YPOS_MIDDLE + 15 and yposb >= BOX_YPOS_MIDDLE - 15 then 
+				-- Left side
+				if xposb >= BOX_XPOS_MID - 18 AND xposb <= BOX_XPOS_MID - 15 and sig_Vx > 0 then
+					sig_Vx <= -sig_Vx;
+				-- Right side
+				elsif xposb <= BOX_XPOS_MID + 18 AND xposb >= BOX_XPOS_MID + 15 and sig_Vx < 0 then
+					sig_Vx <= -sig_Vx;
+				end if;
 			end if;	
+			-- Paddle 1 Collision Logic
+			if (xposb >= 40 and xposb < (45 + 10)) then  -- Ball overlaps with Paddle 1 x-coordinates
+				if (yposb >= paddle_1_y - 6 and yposb < paddle_1_y + 13) then
+					-- Top section: deflect upward
+					sig_Vx <= 2;
+					sig_Vy <= -2;
+					-- sig_Vy <= sig_Vy - 1;  -- Increase upward speed
+				elsif (yposb >= paddle_1_y + 14 and yposb < paddle_1_y + 26 and sig_Vx < 0) then
+					-- Middle section: normal bounce
+					sig_Vx <= -sig_Vx;  -- Reverse x-direction
+				elsif (yposb >= paddle_1_y + 27 and yposb < paddle_1_y + 46) then
+					-- Bottom section: deflect downward
+					sig_Vx <= 2;
+					sig_Vy <= 2;
+				end if;
+			end if;
+	
+			-- Paddle 2 Collision Logic
+			if (xposb >= (595 - 10) and xposb < 600) then  -- Ball overlaps with Paddle 2 x-coordinates
+				if (yposb >= paddle_2_y - 6 and yposb < paddle_2_y + 13) then
+					-- Top section: deflect upward
+					sig_Vx <= -2;
+					sig_Vy <= -2;
+				elsif (yposb >= paddle_2_y + 14 and yposb < paddle_2_y + 26 and sig_Vx > 0) then
+					-- Middle section: normal bounce
+					sig_Vx <= -sig_Vx;  -- Reverse x-direction
+				elsif (yposb >= paddle_2_y + 27 and yposb < paddle_2_y + 46) then
+					-- Bottom section: deflect downward
+					sig_Vx <= -2;
+					sig_Vy <= 2;
+				end if;
+			end if;
 		end if;
-		--bumper collision logic 
-		--if yposb < yposbmp1 + 10 and yposb > yposbmp1 - 10 then
-		--	if xposb >= 65
-		-- end if;
+
+
 		Vx <= sig_Vx;
 		Vy <= sig_Vy;
 		p1_points <= sig_p1_points;

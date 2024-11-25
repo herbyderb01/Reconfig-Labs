@@ -15,10 +15,10 @@ entity ball_logic is
 end;
 
 architecture behavioral of ball_logic is
-	-- signal xposb_internal : integer := 185;
-	-- signal yposb_internal : integer := 180;
-	signal xposb_internal : integer := 230;
-	signal yposb_internal : integer := 180;
+	-- signal xposb_internal : integer := 320;
+	-- signal yposb_internal : integer := 290;
+	signal xposb_internal : integer := 500;
+	signal yposb_internal : integer := 200;
 begin
 	
 	process(clk) 
