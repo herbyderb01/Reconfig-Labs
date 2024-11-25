@@ -38,6 +38,9 @@ architecture counter of ADC is
 			locked					: OUT STD_LOGIC 
 		);
 	end component PLL_10M;
+	
+	type state_type is (read_1, wait1, read_2, wait2);
+	signal current_state, next_state: state_type;
 
 	signal s_clock_clk              : std_logic;
 	-- signal s_reset_sink_reset_n     : std_logic;
@@ -84,6 +87,31 @@ begin
 		c0	 => s_adc_pll_clock_clk,
 		locked	 => s_adc_pll_locked_export
 	);
+	
+	clk_proc : process(clk)
+	begin
+		if rising_edge(clk) then
+			current_state <= next_state;
+		end if
+	end
+	
+	(read_1, wait1, read_2, wait2
+	state_proc : process(current_state, btn)
+	begin
+		case current_state is
+			when read_1 =>
+				s_command_channel <= "00001";
+				next_state <= wait1;
+			when wait1 =>
+				next_state <= read_2;
+			when read_2 =>
+				s_command_channel <= "00010";
+				next_state <= wait2;
+			when wait2 =>
+				next_state <= read1;
+		end case;
+			
+	end
 
 	proc1: process(clk)
 	begin
@@ -91,13 +119,11 @@ begin
 			if btn = '0' then
 				output1 <= (others => '0');
 				output2 <= (others => '0');
-			elsif s_response_valid = '1' then
-				output1 <= s_response_data; 
-				output2 <= s_response_data;
+			elsif s_response_valid = '1' and s_command_channel = "00010" then
+				output2 <= response_data;
+			elsif s_response_valid = '1' and s_command_channel = "00001" then
+				output1 <= response_data;
 			end if;
 		end if;
 	end process proc1;
-
-
-
 end counter;
