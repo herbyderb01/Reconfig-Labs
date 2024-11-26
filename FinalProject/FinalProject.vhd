@@ -56,6 +56,8 @@ architecture component_list of FinalProject is
 			ball_y     : in  integer;                        -- Ball Y position
 			paddle_1_y : in  integer;                        -- Paddle 1 Y position
 			paddle_2_y : in  integer;                        -- Paddle 2 Y position
+			p1_points: in integer;							 -- P1 points
+			p2_points: in integer;							 -- P2 points
 			frame_end  : out std_logic;
 			board_color : out STD_LOGIC_VECTOR(11 downto 0)  -- RGB color output for each pixel
 		);
@@ -84,8 +86,8 @@ architecture component_list of FinalProject is
 			clk 	 : in std_logic;
 			xposb 	 : in integer;
 			yposb 	 : in integer;
-			yposbmp1 : in integer;
-			yposbmp2 : in integer;
+			paddle_1_y : in integer;
+			paddle_2_y : in integer;
 			frame_end: in std_logic;
 			p1_points: out integer;
 			p2_points: out integer;
@@ -98,8 +100,6 @@ architecture component_list of FinalProject is
 		port (
 			clk				: in std_logic;
 			rst_btn			: in std_logic;
-			xposb			: out integer;
-			yposb			: out integer;
 			frame_end		: in std_logic;
 			paddle_1_y		: out integer;
 			paddle_2_y		: out integer
@@ -175,10 +175,10 @@ begin
             pixel_en   => pixel_en,
             ball_x     => ball_x,
             ball_y     => ball_y,
-            -- paddle_1_y => paddle_1_y,
-            paddle_1_y => 160,
-            -- paddle_2_y => paddle_2_y,
-            paddle_2_y => 160,
+            paddle_1_y => paddle_1_y,
+            paddle_2_y => paddle_2_y,
+            p1_points => p1_points,
+            p2_points => p2_points,
 			frame_end => frame_end,
             board_color => board_color
         );
@@ -204,8 +204,8 @@ begin
 			clk => vga_clk,
 			xposb => ball_x,
 			yposb => ball_y,
-			yposbmp1 => paddle_1_y,
-			yposbmp2 => paddle_2_y,
+			paddle_1_y => paddle_1_y,
+			paddle_2_y => paddle_2_y,
 			frame_end => frame_end,
 			p1_points => p1_points,
 			p2_points => p2_points,
@@ -213,16 +213,14 @@ begin
 			Vy => Vy
 			);
 			
-	-- ball : ball_logic
-	-- 	port map(
-	-- 		clk => vga_clk,
-	-- 		rst => vga_clk,
-	-- 		xposb => ball_x,
-	-- 		yposb => ball_y,
-	-- 		frame_end => frame_end,
-	-- 		paddle_1_y => paddle_1_y,
-	-- 		paddle_2_y => paddle_1_y
-	-- 	);
+	paddle_control_inst : paddle_control
+		port map(
+			clk => ADC_CLK_10,
+			rst_btn => rst,
+			frame_end => frame_end,
+			paddle_1_y => paddle_1_y,
+			paddle_2_y => paddle_2_y
+		);
 
 	VGA_R <= board_color(11 downto 8);
 	VGA_G <= board_color(7 downto 4);

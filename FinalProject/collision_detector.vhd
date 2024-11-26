@@ -7,8 +7,8 @@ entity collision_detector is
 		clk 	 : in std_logic;
 		xposb 	 : in integer;
 		yposb 	 : in integer;
-		yposbmp1 : in integer;
-		yposbmp2 : in integer;
+		paddle_1_y : in integer;
+		paddle_2_y : in integer;
 		frame_end: in std_logic;
 		p1_points: out integer;
 		p2_points: out integer;
@@ -27,13 +27,13 @@ architecture behavioral of collision_detector is
 	signal sig_p2_points : integer := 0;
 	constant BOX_YPOS_UPPER : integer := 110;
 	constant BOX_YPOS_LOWER : integer := 250;
-	constant BOX_XPOS_RP : integer := 185;
+	constant BOX_XPOS_RP : integer := 165;
 	constant BOX_YPOS_MIDDLE : integer := 180;
 	constant BOX_XPOS_MID : integer := 320;
-	constant X_BOS_DIST : integer := 90;
+	constant X_BOS_DIST : integer := 95;
 
-	signal paddle_1_y : integer := 160;
-	signal paddle_2_y : integer := 160;
+	-- signal paddle_1_y : integer := 160;
+	-- signal paddle_2_y : integer := 160;
 	
 begin
 	p1_points <= sig_p1_points;
@@ -51,15 +51,15 @@ begin
 			
 			--left and right walls and goals
 			if xposb >= 610 and sig_Vx > 0 then
-				-- if yposb > 145 and yposb < 215 then -- P1 Goal
-				-- 	sig_p1_points <= sig_p1_points + 1;
+				if yposb > 145 and yposb < 215 then -- P1 Goal
+					sig_p1_points <= sig_p1_points + 1;
+				end if;
 				sig_Vx <= -sig_Vx;
-				-- end if;
 			elsif xposb <= 30 and sig_Vx < 0 then
-				-- if yposb > 145 and yposb < 215 then -- P2 Goal
-				-- 	sig_p2_points <= sig_p2_points + 1;
+				if yposb > 145 and yposb < 215 then -- P2 Goal
+					sig_p2_points <= sig_p2_points + 1;
+				end if;
 				sig_Vx <= -sig_Vx;
-				-- end if;
 			end if;
 			
 			--Boxes Y DIR

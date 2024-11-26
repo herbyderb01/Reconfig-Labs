@@ -168,7 +168,7 @@ begin
 
 			-- Draw upper 4 red boxes, each 20x20 pixels, spaced 60 pixels apart from left to right
 			for i in 0 to 3 loop
-				if (x_pixel_pos >= (175 + (i * 90)) and x_pixel_pos < (195 + (i * 90))) and
+				if (x_pixel_pos >= (155 + (i * 95)) and x_pixel_pos < (175 + (i * 95))) and
 				(y_pixel_pos >= 100 and y_pixel_pos < 120) then
 					board_color <= "111100000000";  -- Obstacle (red)
 				end if;
@@ -176,7 +176,7 @@ begin
 
 			-- Draw lower 4 red boxes, each 20x20 pixels, spaced 60 pixels apart from left to right
 			for i in 0 to 3 loop
-				if (x_pixel_pos >= (175 + (i * 90)) and x_pixel_pos < (195 + (i * 90))) and
+				if (x_pixel_pos >= (155 + (i * 95)) and x_pixel_pos < (175 + (i * 95))) and
 				(y_pixel_pos >= 240 and y_pixel_pos < 260) then
 					board_color <= "111100000000";  -- Obstacle (red)
 				end if;

@@ -19,17 +19,17 @@ architecture behavioral of paddle_control is
 		port (
 			clk : in std_logic;
 			btn : in std_logic;
-			output : out std_logic_vector(11 downto 0)					
+			output1 : out std_logic_vector(11 downto 0);				
+			output2 : out std_logic_vector(11 downto 0)					
 		);
 	end component ADC;
 
-	signal clk				: std_logic;
 
 	signal adc1_out			: std_logic_vector(11 downto 0);
 	signal adc2_out			: std_logic_vector(11 downto 0);
 
-	constant min_y : integer := 60;
-    constant max_y : integer := 320;
+	constant min_y : integer := 25;
+    constant max_y : integer := 295;
     constant adc_max : integer := 4095;
     signal adc_value1 : integer;
 	signal adc_value2 : integer;
@@ -48,13 +48,13 @@ begin
 	process(clk) 
 	begin
 		-- Convert the 12-bit ADC value to an integer
-		adc_value1 := to_integer(unsigned(adc1_out));
-		adc_value2 := to_integer(unsigned(adc2_out));
+		adc_value1 <= to_integer(unsigned(adc1_out));
+		adc_value2 <= to_integer(unsigned(adc2_out));
 
 		if rising_edge(clk) and frame_end = '1' then
 			-- Map the ADC value to the paddle_1_y range
-			paddle_1_y <= min_y + ((adc_value * (max_y - min_y)) / adc_max);
-			paddle_1_y <= min_y + ((adc_value * (max_y - min_y)) / adc_max);
+			paddle_1_y <= min_y + ((adc_value1 * (max_y - min_y)) / adc_max);
+			paddle_2_y <= min_y + ((adc_value2 * (max_y - min_y)) / adc_max);
 		end if;
 	end process;
 

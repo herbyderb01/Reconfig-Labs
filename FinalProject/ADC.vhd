@@ -39,7 +39,7 @@ architecture counter of ADC is
 		);
 	end component PLL_10M;
 	
-	type state_type is (read_1, wait1, read_2, wait2);
+	type state_type is (read_1, wait1, wait12, read_2, wait2, wait22);
 	signal current_state, next_state: state_type;
 
 	signal s_clock_clk              : std_logic;
@@ -92,10 +92,9 @@ begin
 	begin
 		if rising_edge(clk) then
 			current_state <= next_state;
-		end if
-	end
+		end if;
+	end process clk_proc;
 	
-	(read_1, wait1, read_2, wait2
 	state_proc : process(current_state, btn)
 	begin
 		case current_state is
@@ -103,26 +102,30 @@ begin
 				s_command_channel <= "00001";
 				next_state <= wait1;
 			when wait1 =>
+				next_state <= wait12;
+			when wait12 =>
 				next_state <= read_2;
 			when read_2 =>
 				s_command_channel <= "00010";
 				next_state <= wait2;
 			when wait2 =>
-				next_state <= read1;
+				next_state <= wait22;
+			when wait22 =>
+				next_state <= read_1;
 		end case;
 			
-	end
+	end process state_proc;
 
 	proc1: process(clk)
 	begin
-		if rising_edge(clk) and frame_end = '1' then -- need to fix this to switch between two channels
+		if rising_edge(clk) then
 			if btn = '0' then
 				output1 <= (others => '0');
 				output2 <= (others => '0');
 			elsif s_response_valid = '1' and s_command_channel = "00010" then
-				output2 <= response_data;
+				output2 <= s_response_data;
 			elsif s_response_valid = '1' and s_command_channel = "00001" then
-				output1 <= response_data;
+				output1 <= s_response_data;
 			end if;
 		end if;
 	end process proc1;
