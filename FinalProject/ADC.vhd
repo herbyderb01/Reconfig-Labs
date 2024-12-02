@@ -39,7 +39,7 @@ architecture counter of ADC is
 		);
 	end component PLL_10M;
 	
-	type state_type is (read_1, wait1, wait12, read_2, wait2, wait22);
+	type state_type is (read_1, wait1, read_2, wait2);
 	signal current_state, next_state: state_type;
 
 	signal s_clock_clk              : std_logic;
@@ -95,24 +95,30 @@ begin
 		end if;
 	end process clk_proc;
 	
-	state_proc : process(current_state, btn)
+	state_proc : process(clk)
 	begin
-		case current_state is
-			when read_1 =>
-				s_command_channel <= "00001";
-				next_state <= wait1;
-			when wait1 =>
-				next_state <= wait12;
-			when wait12 =>
-				next_state <= read_2;
-			when read_2 =>
-				s_command_channel <= "00010";
-				next_state <= wait2;
-			when wait2 =>
-				next_state <= wait22;
-			when wait22 =>
-				next_state <= read_1;
-		end case;
+		if rising_edge(clk) then
+			case current_state is
+				when read_1 =>
+					s_command_valid <= '1';
+					s_command_channel <= "00001";
+					next_state <= wait1;
+				when wait1 =>
+					s_command_valid <= '1';
+					if s_command_ready = '1' then
+						next_state <= read_2;
+					end if;
+				when read_2 =>
+					s_command_valid <= '1';
+					s_command_channel <= "00010";
+					next_state <= wait2;
+				when wait2 =>
+					s_command_valid <= '1';
+					if s_command_ready = '1' then
+						next_state <= read_1;
+					end if;
+			end case;
+		end if;
 			
 	end process state_proc;
 
