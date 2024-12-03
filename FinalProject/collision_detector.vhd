@@ -67,16 +67,16 @@ begin
 				if yposb > 145 and yposb < 215 then -- P1 Goal
 					sig_p1_points <= sig_p1_points + 1;
 					p1_just_scored <= '1';
-					Vx <= 2;
-					Vy <= 0;			
+					sig_Vx <= -2;
+					sig_Vy <= 0;			
 				end if;
 				sig_Vx <= -sig_Vx;
 			elsif xposb <= 30 and sig_Vx < 0 then
 				if yposb > 145 and yposb < 215 then -- P2 Goal
 					sig_p2_points <= sig_p2_points + 1;
 					p2_just_scored <= '1';
-					Vx <= -2;
-					Vy <= 0;
+					sig_Vx <= 2;
+					sig_Vy <= 0;
 				end if;
 				sig_Vx <= -sig_Vx;
 			end if;

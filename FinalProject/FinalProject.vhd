@@ -121,6 +121,9 @@ architecture component_list of FinalProject is
 			paddle_2_y		: out integer
 		);
 	end component paddle_control;
+
+	type state_type is (START, GAME_RUNNING, SCORED, FINISHED);
+	signal current_state, next_state: state_type;
 		
 	signal key0_l : std_logic;
 	signal key1_l : std_logic;
@@ -265,5 +268,52 @@ begin
 
 	key0_l <= not KEY(0); 
 	key1_l <= not KEY(1); 
+
+	process(vga_clk) 
+	begin
+		if rising_edge(vga_clk) then
+			current_state <= next_state;
+			if rst = '1' then
+				current_state <= START;
+			end if;
+		end if;
+	end process;
+
+	process (current_state, p1_points, p2_points, new_ball_btn)
+	begin
+		case current_state is
+			when START =>
+				ball_en <= '0';
+				if new_ball_btn = '1' then
+					next_state <= GAME_RUNNING;
+					ball_en <= '1';
+				else
+					next_state <= START;
+				end if;
+				
+			when GAME_RUNNING =>
+				if p1_just_scored = '1' or p2_just_scored = '1' then
+					ball_en <= '0';
+					next_state <= SCORED;
+				else
+					next_state <= GAME_RUNNING;
+				end if;
+			
+			when SCORED =>
+				if new_ball_btn = '1' and (p1_points < 5 or p2_points < 5) then
+					next_state <= GAME_RUNNING;
+					ball_en <= '1';
+				elsif p1_points = 5 or p2_points = 5 then
+					next_state <= FINISHED;
+					ball_en <= '0';
+				end if;
+			
+			when FINISHED =>
+				ball_en <= '0';
+			
+			when others =>
+				next_state <= START;
+		end case;
+	end process;
 	
 end component_list;
