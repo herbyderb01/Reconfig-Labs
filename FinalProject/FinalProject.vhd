@@ -92,6 +92,7 @@ architecture component_list of FinalProject is
 	component collision_detector 
 		port (
 			clk 	 : in std_logic;
+			rst 	 : in std_logic;
 			xposb 	 : in integer;
 			yposb 	 : in integer;
 			paddle_1_y : in integer;
@@ -99,6 +100,8 @@ architecture component_list of FinalProject is
 			frame_end: in std_logic;
 			p1_points: out integer;
 			p2_points: out integer;
+			p1_just_scored : out std_logic;
+			p2_just_scored : out std_logic;
 			Vx 		 : out integer;
 			Vy 		 : out integer
 		);
@@ -116,8 +119,7 @@ architecture component_list of FinalProject is
 		
 	signal key0_l : std_logic;
 	signal key1_l : std_logic;
-	signal pressed : std_logic;
-
+	signal new_ball_btn : std_logic;
 
 	signal vga_clk	: std_logic;  -- VGA clock
 	signal rst		: std_logic;  -- Reset signal
@@ -143,9 +145,9 @@ architecture component_list of FinalProject is
 	signal Vx				: integer; -- Ball Velocity x direction
 	signal Vy				: integer; -- Ball Velocity y direction
 	signal frame_end		: std_logic;
+	signal p1_just_scored	: std_logic;
+	signal p2_just_scored	: std_logic;
 
-
-	
 	signal rng_output : std_logic;
 
 begin
@@ -162,7 +164,7 @@ begin
 		port map (
 			clk => vga_clk,
 			btn => key1_l,
-			output => pressed
+			output => new_ball_btn
 		);
 
 	-- Instantiate RNG
@@ -222,6 +224,7 @@ begin
 	boom : collision_detector
 		port map(
 			clk => vga_clk,
+			rst => rst,
 			xposb => ball_x,
 			yposb => ball_y,
 			paddle_1_y => paddle_1_y,
@@ -229,9 +232,11 @@ begin
 			frame_end => frame_end,
 			p1_points => p1_points,
 			p2_points => p2_points,
+			p1_just_scored => p1_just_scored,
+			p2_just_scored => p2_just_scored,
 			Vx => Vx,
 			Vy => Vy
-			);
+		);
 			
 	paddle_control_inst : paddle_control
 		port map(
