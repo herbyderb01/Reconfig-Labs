@@ -60,6 +60,7 @@ architecture component_list of FinalProject is
 			pixel_x    : in  STD_LOGIC_VECTOR(9 downto 0);  -- Pixel X coordinate
 			pixel_y    : in  STD_LOGIC_VECTOR(9 downto 0);  -- Pixel Y coordinate
 			pixel_en   : in  STD_LOGIC;                     -- Pixel enable signal
+			ball_en   : in  STD_LOGIC;                      -- Ball enable signal
 			ball_x     : in  integer;                        -- Ball X position
 			ball_y     : in  integer;                        -- Ball Y position
 			paddle_1_y : in  integer;                        -- Paddle 1 Y position
@@ -124,6 +125,7 @@ architecture component_list of FinalProject is
 	signal vga_clk	: std_logic;  -- VGA clock
 	signal rst		: std_logic;  -- Reset signal
 	signal pixel_en	: std_logic; -- Pixel enable signal (high when in active region)
+	signal ball_en	: std_logic := '1'; -- Ball enable signal (high when playing before scoring)
 	signal h_count	: integer;   -- Horizontal pixel count (optional, for debugging or extra features)
 	signal v_count	: integer;    -- Vertical line count (optional, for debugging or extra features)
 
@@ -195,6 +197,7 @@ begin
             pixel_x    => pixel_x,
             pixel_y    => pixel_y,
             pixel_en   => pixel_en,
+            ball_en   => ball_en,
             ball_x     => ball_x,
             ball_y     => ball_y,
             paddle_1_y => paddle_1_y,

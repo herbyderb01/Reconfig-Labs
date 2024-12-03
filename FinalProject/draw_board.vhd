@@ -9,6 +9,7 @@ entity draw_board is
 		pixel_x    : in  STD_LOGIC_VECTOR(9 downto 0);  -- Pixel X coordinate
 		pixel_y    : in  STD_LOGIC_VECTOR(9 downto 0);  -- Pixel Y coordinate
 		pixel_en   : in  STD_LOGIC;                     -- Pixel enable signal
+		ball_en   : in  STD_LOGIC;                       -- Ball enable signal
 		ball_x     : in  integer;                        -- Ball X position
 		ball_y     : in  integer;                        -- Ball Y position
 		paddle_1_y : in  integer;                        -- Paddle 1 Y position
@@ -84,31 +85,31 @@ begin
 		end if;
 	end process;
 
-	process(p1_points, p2_points)
-	begin
-		-- Constrain p1_points to the range 0 to 5
-		if p1_points < 0 then
-			score_num_p1 <= 0;  -- Minimum value
-		elsif p1_points > 5 then
-			score_num_p1 <= 5;  -- Maximum value
-		else
-			score_num_p1 <= p1_points;  -- Within range
-		end if;
+	-- process(p1_points, p2_points)
+	-- begin
+	-- 	-- Constrain p1_points to the range 0 to 5
+	-- 	if p1_points < 0 then
+	-- 		score_num_p1 <= 0;  -- Minimum value
+	-- 	elsif p1_points > 5 then
+	-- 		score_num_p1 <= 5;  -- Maximum value
+	-- 	else
+	-- 		score_num_p1 <= p1_points;  -- Within range
+	-- 	end if;
 	
-		-- Constrain p2_points to the range 0 to 5
-		if p2_points < 0 then
-			score_num_p2 <= 0;  -- Minimum value
-		elsif p2_points > 5 then
-			score_num_p2 <= 5;  -- Maximum value
-		else
-			score_num_p2 <= p2_points;  -- Within range
-		end if;
-	end process;	
+	-- 	-- Constrain p2_points to the range 0 to 5
+	-- 	if p2_points < 0 then
+	-- 		score_num_p2 <= 0;  -- Minimum value
+	-- 	elsif p2_points > 5 then
+	-- 		score_num_p2 <= 5;  -- Maximum value
+	-- 	else
+	-- 		score_num_p2 <= p2_points;  -- Within range
+	-- 	end if;
+	-- end process;	
 
 	-- Case statement to control active segments of p1
-	process(score_num_p1)
+	process(p1_points)
 	begin
-		case score_num_p1 is
+		case p1_points is
 			when 0 => segments_p1 <= "1111110";  -- 0
 			when 1 => segments_p1 <= "0110000";  -- 1
 			when 2 => segments_p1 <= "1101101";  -- 2
@@ -120,9 +121,9 @@ begin
 	end process;
 
 	-- Case statement to control active segments of p2
-	process(score_num_p2)
+	process(p2_points)
 	begin
-		case score_num_p2 is
+		case p2_points is
 			when 0 => segments_p2 <= "1111110";  -- 0
 			when 1 => segments_p2 <= "0110000";  -- 1
 			when 2 => segments_p2 <= "1101101";  -- 2
@@ -183,9 +184,11 @@ begin
 			end loop;
 
 			-- Draw the ball (diameter 10 pixels, radius 5 pixels)
-			if ((x_pixel_pos - ball_x) * (x_pixel_pos - ball_x) + 
-				(y_pixel_pos - ball_y) * (y_pixel_pos - ball_y)) < (5 * 5) then
-				board_color <= "111111111111";  -- White color for the ball
+			if ball_en = '1' then
+				if ((x_pixel_pos - ball_x) * (x_pixel_pos - ball_x) + 
+					(y_pixel_pos - ball_y) * (y_pixel_pos - ball_y)) < (5 * 5) then
+					board_color <= "111111111111";  -- White color for the ball
+				end if;
 			end if;
 			
 			-- Draw Paddle 1 (40x5 brown or orange)
