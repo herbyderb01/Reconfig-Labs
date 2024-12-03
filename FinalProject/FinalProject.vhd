@@ -81,12 +81,16 @@ architecture component_list of FinalProject is
 
 	component ball_logic 
 		port (
-		    clk 	 : in std_logic;
-			xposb 	 : out integer;
-			yposb 	 : out integer;
-			frame_end: in std_logic;
-			Vx 		 : in integer;
-			Vy 		 : in integer
+			clk			: in std_logic;
+			rst			: in std_logic;
+			frame_end	: in std_logic;
+			new_round	: in std_logic;
+			start_pos	: in std_logic;
+			ball_en		: in std_logic;
+			Vx			: in integer;
+			Vy			: in integer;
+			xposb		: out integer;
+			yposb		: out integer
 		);
 	end component ball_logic;
 	
@@ -217,11 +221,15 @@ begin
 	ball : ball_logic
 		port map(
 			clk => vga_clk,
-			xposb => ball_x,
-			yposb => ball_y,
+			rst => rst,
 			frame_end => frame_end,
+			new_round => new_ball_btn,
+			start_pos => rng_output,
+			ball_en => ball_en,
 			Vx => Vx,
-			Vy => Vy
+			Vy => Vy,
+			xposb => ball_x,
+			yposb => ball_y
 		);
 		
 	boom : collision_detector
