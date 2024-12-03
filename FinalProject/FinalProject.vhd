@@ -33,6 +33,14 @@ architecture component_list of FinalProject is
 		);
 	end component debouncer;
 
+	component RNG is
+		port (
+			clk       : in  std_logic;  -- Clock signal
+			reset     : in  std_logic;  -- Reset signal
+			rng_out   : out std_logic   -- Random output (0 or 1)
+		);
+	end component;
+
 	component VGA
 		port (
 			clk        : in std_logic;  -- VGA clock
@@ -136,6 +144,10 @@ architecture component_list of FinalProject is
 	signal Vy				: integer; -- Ball Velocity y direction
 	signal frame_end		: std_logic;
 
+
+	
+	signal rng_output : std_logic;
+
 begin
 	-- Reset the game button
 	rst_btn : debouncer
@@ -151,6 +163,14 @@ begin
 			clk => vga_clk,
 			btn => key1_l,
 			output => pressed
+		);
+
+	-- Instantiate RNG
+	rng_1 : RNG
+		port map (
+			clk     => vga_clk,       -- System clock
+			reset   => rst,     -- System reset
+			rng_out => rng_output -- Random output (0 or 1)
 		);
 
 	-- Instantiate VGA module
