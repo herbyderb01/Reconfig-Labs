@@ -5,6 +5,7 @@ use ieee.numeric_std.all;
 entity collision_detector is
 	port (
 		clk 	 : in std_logic;
+		rst 	 : in std_logic;
 		xposb 	 : in integer;
 		yposb 	 : in integer;
 		paddle_1_y : in integer;
@@ -12,6 +13,8 @@ entity collision_detector is
 		frame_end: in std_logic;
 		p1_points: out integer;
 		p2_points: out integer;
+		p1_just_scored : out std_logic;
+		p2_just_scored : out std_logic;
 		Vx 		 : out integer;
 		Vy 		 : out integer
 	);
@@ -21,10 +24,11 @@ end;
 --to account for width and height of ball and other objects
 
 architecture behavioral of collision_detector is
-	signal sig_Vx : integer := -1;
+	signal sig_Vx : integer := -2;
 	signal sig_Vy : integer := 0;
 	signal sig_p1_points : integer := 0;
 	signal sig_p2_points : integer := 0;
+
 	constant BOX_YPOS_UPPER : integer := 110;
 	constant BOX_YPOS_LOWER : integer := 250;
 	constant BOX_XPOS_RP : integer := 165;
@@ -40,8 +44,17 @@ begin
 	p2_points <= sig_p2_points;
 	process(clk) begin
 	
-		if rising_edge(clk) and frame_end = '1' then
-	
+		if rst = '1' then
+			sig_p1_points <= 0;
+			sig_p2_points <= 0;
+			sig_Vx <= -2;
+			sig_Vy <= 0;
+
+		elsif rising_edge(clk) and frame_end = '1' then
+
+			p1_just_scored <= '0';
+			p2_just_scored <= '0';
+
 			--ceiling and floor
 			if yposb >= 330 and sig_Vy > 0 then -- floor
 				sig_Vy <= -sig_Vy;
@@ -53,11 +66,17 @@ begin
 			if xposb >= 610 and sig_Vx > 0 then
 				if yposb > 145 and yposb < 215 then -- P1 Goal
 					sig_p1_points <= sig_p1_points + 1;
+					p1_just_scored <= '1';
+					sig_Vx <= -2;
+					sig_Vy <= 0;			
 				end if;
 				sig_Vx <= -sig_Vx;
 			elsif xposb <= 30 and sig_Vx < 0 then
 				if yposb > 145 and yposb < 215 then -- P2 Goal
 					sig_p2_points <= sig_p2_points + 1;
+					p2_just_scored <= '1';
+					sig_Vx <= 2;
+					sig_Vy <= 0;
 				end if;
 				sig_Vx <= -sig_Vx;
 			end if;
@@ -137,35 +156,51 @@ begin
 					sig_Vx <= -sig_Vx;
 				end if;
 			end if;	
+
 			-- Paddle 1 Collision Logic
 			if (xposb >= 40 and xposb < (45 + 10)) then  -- Ball overlaps with Paddle 1 x-coordinates
-				if (yposb >= paddle_1_y - 6 and yposb < paddle_1_y + 13) then
-					-- Top section: deflect upward
-					sig_Vx <= 2;
+				if (yposb >= paddle_1_y - 6 and yposb < paddle_1_y + 8) then
+					-- Topmost section: sharp deflection upward
+					sig_Vx <= 4;
 					sig_Vy <= -2;
-					-- sig_Vy <= sig_Vy - 1;  -- Increase upward speed
-				elsif (yposb >= paddle_1_y + 14 and yposb < paddle_1_y + 26 and sig_Vx < 0) then
+				elsif (yposb >= paddle_1_y + 8 and yposb < paddle_1_y + 16) then
+					-- Second section: moderate deflection upward
+					sig_Vx <= 3;
+					sig_Vy <= -1;
+				elsif (yposb >= paddle_1_y + 16 and yposb < paddle_1_y + 24) then
 					-- Middle section: normal bounce
 					sig_Vx <= -sig_Vx;  -- Reverse x-direction
-				elsif (yposb >= paddle_1_y + 27 and yposb < paddle_1_y + 46) then
-					-- Bottom section: deflect downward
-					sig_Vx <= 2;
+				elsif (yposb >= paddle_1_y + 24 and yposb < paddle_1_y + 32) then
+					-- Fourth section: moderate deflection downward
+					sig_Vx <= 3;
+					sig_Vy <= 1;
+				elsif (yposb >= paddle_1_y + 32 and yposb < paddle_1_y + 40) then
+					-- Bottommost section: sharp deflection downward
+					sig_Vx <= 4;
 					sig_Vy <= 2;
 				end if;
 			end if;
-	
+
 			-- Paddle 2 Collision Logic
 			if (xposb >= (595 - 10) and xposb < 600) then  -- Ball overlaps with Paddle 2 x-coordinates
-				if (yposb >= paddle_2_y - 6 and yposb < paddle_2_y + 13) then
-					-- Top section: deflect upward
-					sig_Vx <= -2;
+				if (yposb >= paddle_2_y - 6 and yposb < paddle_2_y + 8) then
+					-- Topmost section: sharp deflection upward
+					sig_Vx <= -4;
 					sig_Vy <= -2;
-				elsif (yposb >= paddle_2_y + 14 and yposb < paddle_2_y + 26 and sig_Vx > 0) then
+				elsif (yposb >= paddle_2_y + 8 and yposb < paddle_2_y + 16) then
+					-- Second section: moderate deflection upward
+					sig_Vx <= -3;
+					sig_Vy <= -1;
+				elsif (yposb >= paddle_2_y + 16 and yposb < paddle_2_y + 24) then
 					-- Middle section: normal bounce
 					sig_Vx <= -sig_Vx;  -- Reverse x-direction
-				elsif (yposb >= paddle_2_y + 27 and yposb < paddle_2_y + 46) then
-					-- Bottom section: deflect downward
-					sig_Vx <= -2;
+				elsif (yposb >= paddle_2_y + 24 and yposb < paddle_2_y + 32) then
+					-- Fourth section: moderate deflection downward
+					sig_Vx <= -3;
+					sig_Vy <= 1;
+				elsif (yposb >= paddle_2_y + 32 and yposb < paddle_2_y + 40) then
+					-- Bottommost section: sharp deflection downward
+					sig_Vx <= -4;
 					sig_Vy <= 2;
 				end if;
 			end if;
