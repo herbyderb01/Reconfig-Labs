@@ -25,32 +25,36 @@ begin
 	begin
 		case current_state is
 			when WAITING =>
-				output <= '0';
 				if btn = '1' then
 					next_state <= PRESSED;
+					output <= '0';
 				else
 					next_state <= WAITING;
+					output <= '0';
 				end if;
 			
 			when PRESSED =>
-				output <= '0';
 				if btn = '1' then
 					next_state <= HOLD;
+					output <= '0';
 				else
 					next_state <= WAITING;
+					output <= '0';
 				end if;
 				
 			when HOLD =>
-				output <= '0';
 				if btn = '1' then
 					next_state <= HOLD;
+					output <= '0';
 				else
 					next_state <= RELEASED;
+					output <= '0';
 				end if;
 			
 			when RELEASED =>
 				if btn = '1' then
 					next_state <= HOLD;
+					output <= '0';
 				else
 					next_state <= WAITING;
 					output <= '1';

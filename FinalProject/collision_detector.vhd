@@ -24,17 +24,17 @@ end;
 --to account for width and height of ball and other objects
 
 architecture behavioral of collision_detector is
-	signal sig_Vx : integer := -2;
+	signal sig_Vx : integer := -4;
 	signal sig_Vy : integer := 0;
 	signal sig_p1_points : integer := 0;
 	signal sig_p2_points : integer := 0;
 
 	constant BOX_YPOS_UPPER : integer := 110;
 	constant BOX_YPOS_LOWER : integer := 250;
-	constant BOX_XPOS_RP : integer := 165;
+	constant BOX_XPOS_RP : integer := 164;
 	constant BOX_YPOS_MIDDLE : integer := 180;
 	constant BOX_XPOS_MID : integer := 320;
-	constant X_BOS_DIST : integer := 95;
+	constant X_BOS_DIST : integer := 104;
 
 	-- signal paddle_1_y : integer := 160;
 	-- signal paddle_2_y : integer := 160;
@@ -47,7 +47,7 @@ begin
 		if rst = '1' then
 			sig_p1_points <= 0;
 			sig_p2_points <= 0;
-			sig_Vx <= -2;
+			sig_Vx <= -4;
 			sig_Vy <= 0;
 
 		elsif rising_edge(clk) and frame_end = '1' then
@@ -67,7 +67,7 @@ begin
 				if yposb > 145 and yposb < 215 then -- P1 Goal
 					sig_p1_points <= sig_p1_points + 1;
 					p1_just_scored <= '1';
-					sig_Vx <= -2;
+					sig_Vx <= 4;
 					sig_Vy <= 0;			
 				end if;
 				sig_Vx <= -sig_Vx;
@@ -75,7 +75,7 @@ begin
 				if yposb > 145 and yposb < 215 then -- P2 Goal
 					sig_p2_points <= sig_p2_points + 1;
 					p2_just_scored <= '1';
-					sig_Vx <= 2;
+					sig_Vx <= -4;
 					sig_Vy <= 0;
 				end if;
 				sig_Vx <= -sig_Vx;
@@ -84,40 +84,40 @@ begin
 			--Boxes Y DIR
 			-- plus 15 is 10 for box's height plus 3 for hit box
 			-- top of upper row box
-			if yposb >= BOX_YPOS_UPPER - 18 and yposb <= BOX_YPOS_UPPER - 13  and sig_Vy > 0 then 
+			if yposb >= BOX_YPOS_UPPER - 18 and yposb <= BOX_YPOS_UPPER - 10  and sig_Vy > 0 then 
 				for i in 0 to 3 loop
 					if xposb >= BOX_XPOS_RP + i * X_BOS_DIST - 15 AND xposb <= BOX_XPOS_RP + i * X_BOS_DIST  + 15 then
 						sig_Vy <= -sig_Vy;
 					end if;
 				end loop;
 			-- bottom of upper row boxes
-			elsif yposb <= BOX_YPOS_UPPER + 18 and yposb >= BOX_YPOS_UPPER + 13 and sig_Vy < 0 then
+			elsif yposb <= BOX_YPOS_UPPER + 18 and yposb >= BOX_YPOS_UPPER + 10 and sig_Vy < 0 then
 				for i in 0 to 3 loop
 					if xposb >= BOX_XPOS_RP + i * X_BOS_DIST  - 15 AND xposb <= BOX_XPOS_RP + i * X_BOS_DIST  + 15 then
 						sig_Vy <= -sig_Vy;
 					end if;
 				end loop;
 			-- top of bottom row boxes
-			elsif yposb >= BOX_YPOS_LOWER - 18 and yposb <= BOX_YPOS_LOWER - 13 and sig_Vy > 0 then 
+			elsif yposb >= BOX_YPOS_LOWER - 18 and yposb <= BOX_YPOS_LOWER - 10 and sig_Vy > 0 then 
 				for i in 0 to 3 loop
 					if xposb >= BOX_XPOS_RP + i * X_BOS_DIST  - 15 AND xposb <= BOX_XPOS_RP + i * X_BOS_DIST  + 15 then
 						sig_Vy <= -sig_Vy;
 					end if;
 				end loop;
 			-- bottom of bottom row boxes
-			elsif yposb <= BOX_YPOS_LOWER + 18 and yposb >= BOX_YPOS_LOWER + 13 and sig_Vy < 0 then
+			elsif yposb <= BOX_YPOS_LOWER + 18 and yposb >= BOX_YPOS_LOWER + 10 and sig_Vy < 0 then
 				for i in 0 to 3 loop
 					if xposb >= BOX_XPOS_RP + i * X_BOS_DIST  - 15 AND xposb <= BOX_XPOS_RP + i * X_BOS_DIST  + 15 then
 						sig_Vy <= -sig_Vy;
 					end if;
 				end loop;
 			-- top of middle box
-			elsif yposb >= BOX_YPOS_MIDDLE - 25 and yposb >= BOX_YPOS_MIDDLE - 20  and sig_Vy > 0 then 
+			elsif yposb >= BOX_YPOS_MIDDLE - 18 and yposb >= BOX_YPOS_MIDDLE - 10  and sig_Vy > 0 then 
 				if xposb >= BOX_XPOS_MID  - 15 AND xposb <= BOX_XPOS_MID + 15 then
 					sig_Vy <= -sig_Vy;
 				end if;
 			-- bottom of middle box
-			elsif yposb <= BOX_YPOS_MIDDLE + 18 and yposb >= BOX_YPOS_MIDDLE + 13 and sig_Vy < 0 then
+			elsif yposb <= BOX_YPOS_MIDDLE + 18 and yposb >= BOX_YPOS_MIDDLE + 10 and sig_Vy < 0 then
 				if xposb >= BOX_XPOS_MID - 15 AND xposb <= BOX_XPOS_MID + 15 then
 					sig_Vy <= -sig_Vy;
 				end if;
@@ -128,10 +128,10 @@ begin
 			if yposb <= BOX_YPOS_UPPER + 15 and yposb >= BOX_YPOS_UPPER - 15 then 
 				for i in 0 to 3 loop
 					--Left side
-					if xposb >= BOX_XPOS_RP + i * X_BOS_DIST - 18 AND xposb <= BOX_XPOS_RP + i * X_BOS_DIST  - 15 and sig_Vx > 0 then
+					if xposb >= BOX_XPOS_RP + i * X_BOS_DIST - 18 AND xposb <= BOX_XPOS_RP + i * X_BOS_DIST  - 10 and sig_Vx > 0 then
 						sig_Vx <= -sig_Vx;
 					--Right side
-					elsif xposb <= BOX_XPOS_RP + i * X_BOS_DIST + 18 AND xposb >= BOX_XPOS_RP + i * X_BOS_DIST  + 15 and sig_Vx < 0 then
+					elsif xposb <= BOX_XPOS_RP + i * X_BOS_DIST + 18 AND xposb >= BOX_XPOS_RP + i * X_BOS_DIST  + 10 and sig_Vx < 0 then
 						sig_Vx <= -sig_Vx;
 					end if;
 				end loop;
@@ -139,20 +139,20 @@ begin
 			elsif yposb <= BOX_YPOS_LOWER + 15 and yposb >= BOX_YPOS_LOWER - 15 then 
 				for i in 0 to 3 loop
 					--Left side
-					if xposb >= BOX_XPOS_RP + i * X_BOS_DIST - 18 AND xposb <= BOX_XPOS_RP + i * X_BOS_DIST  - 15 and sig_Vx > 0 then
+					if xposb >= BOX_XPOS_RP + i * X_BOS_DIST - 18 AND xposb <= BOX_XPOS_RP + i * X_BOS_DIST  - 10 and sig_Vx > 0 then
 						sig_Vx <= -sig_Vx;
 					--Right side
-					elsif xposb <= BOX_XPOS_RP + i * X_BOS_DIST + 18 AND xposb >= BOX_XPOS_RP + i * X_BOS_DIST  + 15 and sig_Vx < 0 then
+					elsif xposb <= BOX_XPOS_RP + i * X_BOS_DIST + 18 AND xposb >= BOX_XPOS_RP + i * X_BOS_DIST  + 10 and sig_Vx < 0 then
 						sig_Vx <= -sig_Vx;
 					end if;
 				end loop;
 			--middle box
 			elsif yposb <= BOX_YPOS_MIDDLE + 15 and yposb >= BOX_YPOS_MIDDLE - 15 then 
 				-- Left side
-				if xposb >= BOX_XPOS_MID - 18 AND xposb <= BOX_XPOS_MID - 15 and sig_Vx > 0 then
+				if xposb >= BOX_XPOS_MID - 18 AND xposb <= BOX_XPOS_MID - 10 and sig_Vx > 0 then
 					sig_Vx <= -sig_Vx;
 				-- Right side
-				elsif xposb <= BOX_XPOS_MID + 18 AND xposb >= BOX_XPOS_MID + 15 and sig_Vx < 0 then
+				elsif xposb <= BOX_XPOS_MID + 18 AND xposb >= BOX_XPOS_MID + 10 and sig_Vx < 0 then
 					sig_Vx <= -sig_Vx;
 				end if;
 			end if;	
@@ -165,15 +165,15 @@ begin
 					sig_Vy <= -2;
 				elsif (yposb >= paddle_1_y + 8 and yposb < paddle_1_y + 16) then
 					-- Second section: moderate deflection upward
-					sig_Vx <= 3;
-					sig_Vy <= -1;
+					sig_Vx <= 4;
+					sig_Vy <= -2;
 				elsif (yposb >= paddle_1_y + 16 and yposb < paddle_1_y + 24) then
 					-- Middle section: normal bounce
 					sig_Vx <= -sig_Vx;  -- Reverse x-direction
 				elsif (yposb >= paddle_1_y + 24 and yposb < paddle_1_y + 32) then
 					-- Fourth section: moderate deflection downward
-					sig_Vx <= 3;
-					sig_Vy <= 1;
+					sig_Vx <= 4;
+					sig_Vy <= 2;
 				elsif (yposb >= paddle_1_y + 32 and yposb < paddle_1_y + 40) then
 					-- Bottommost section: sharp deflection downward
 					sig_Vx <= 4;
@@ -189,15 +189,15 @@ begin
 					sig_Vy <= -2;
 				elsif (yposb >= paddle_2_y + 8 and yposb < paddle_2_y + 16) then
 					-- Second section: moderate deflection upward
-					sig_Vx <= -3;
-					sig_Vy <= -1;
+					sig_Vx <= -4;
+					sig_Vy <= -2;
 				elsif (yposb >= paddle_2_y + 16 and yposb < paddle_2_y + 24) then
 					-- Middle section: normal bounce
 					sig_Vx <= -sig_Vx;  -- Reverse x-direction
 				elsif (yposb >= paddle_2_y + 24 and yposb < paddle_2_y + 32) then
 					-- Fourth section: moderate deflection downward
-					sig_Vx <= -3;
-					sig_Vy <= 1;
+					sig_Vx <= -4;
+					sig_Vy <= 2;
 				elsif (yposb >= paddle_2_y + 32 and yposb < paddle_2_y + 40) then
 					-- Bottommost section: sharp deflection downward
 					sig_Vx <= -4;

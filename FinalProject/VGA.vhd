@@ -10,9 +10,9 @@ entity VGA is
 		rst			: in std_logic;  -- Reset signal
 		h_sync		: out std_logic; -- Horizontal sync output
 		v_sync		: out std_logic; -- Vertical sync output
-		pixel_en	: out std_logic; -- Pixel enable signal (high when in active region)
-		h_count		: out integer;   -- Horizontal pixel count (optional, for debugging or extra features)
-		v_count		: out integer    -- Vertical line count (optional, for debugging or extra features)
+		pixel_en	: out std_logic -- Pixel enable signal (high when in active region)
+		--h_count		: out integer;   -- Horizontal pixel count (optional, for debugging or extra features)
+		--v_count		: out integer    -- Vertical line count (optional, for debugging or extra features)
 	);
 end VGA;
 
@@ -156,7 +156,7 @@ begin
 	pixel_en <= '1' when (h_state = PIXEL_DATA) and (v_state = PIXEL_DATA) else '0';
 
 	-- Optional outputs for debugging
-	h_count <= h_counter;
-	v_count <= v_counter;
+	--h_count <= h_counter;
+	--v_count <= v_counter;
 
 end Behavioral;

@@ -6,8 +6,8 @@ entity draw_board is
 	Port (
 		clk			: in  std_logic;  -- VGA clock
 		rst			: in  std_logic;  -- Reset
-		pixel_x    : in  STD_LOGIC_VECTOR(9 downto 0);  -- Pixel X coordinate
-		pixel_y    : in  STD_LOGIC_VECTOR(9 downto 0);  -- Pixel Y coordinate
+		--pixel_x    : in  STD_LOGIC_VECTOR(9 downto 0);  -- Pixel X coordinate
+		--pixel_y    : in  STD_LOGIC_VECTOR(9 downto 0);  -- Pixel Y coordinate
 		pixel_en   : in  STD_LOGIC;                     -- Pixel enable signal
 		ball_en   : in  STD_LOGIC;                       -- Ball enable signal
 		ball_x     : in  integer;                        -- Ball X position
@@ -169,15 +169,15 @@ begin
 
 			-- Draw upper 4 red boxes, each 20x20 pixels, spaced 60 pixels apart from left to right
 			for i in 0 to 3 loop
-				if (x_pixel_pos >= (155 + (i * 95)) and x_pixel_pos < (175 + (i * 95))) and
+				if (x_pixel_pos >= (154 + (i * 104)) and x_pixel_pos < (174 + (i * 104))) and
 				(y_pixel_pos >= 100 and y_pixel_pos < 120) then
 					board_color <= "111100000000";  -- Obstacle (red)
 				end if;
 			end loop;
-
+			--486
 			-- Draw lower 4 red boxes, each 20x20 pixels, spaced 60 pixels apart from left to right
 			for i in 0 to 3 loop
-				if (x_pixel_pos >= (155 + (i * 95)) and x_pixel_pos < (175 + (i * 95))) and
+				if (x_pixel_pos >= (154 + (i * 104)) and x_pixel_pos < (174 + (i * 104))) and
 				(y_pixel_pos >= 240 and y_pixel_pos < 260) then
 					board_color <= "111100000000";  -- Obstacle (red)
 				end if;

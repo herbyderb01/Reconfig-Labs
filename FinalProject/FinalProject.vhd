@@ -47,9 +47,9 @@ architecture component_list of FinalProject is
 			rst      : in std_logic;  -- Reset signal
 			h_sync     : out std_logic; -- Horizontal sync output
 			v_sync     : out std_logic; -- Vertical sync output
-			pixel_en   : out std_logic; -- Pixel enable signal (high when in active region)
-			h_count    : out integer;   -- Horizontal pixel count (optional, for debugging or extra features)
-			v_count    : out integer    -- Vertical line count (optional, for debugging or extra features)
+			pixel_en   : out std_logic -- Pixel enable signal (high when in active region)
+			--h_count    : out integer;   -- Horizontal pixel count (optional, for debugging or extra features)
+			--v_count    : out integer    -- Vertical line count (optional, for debugging or extra features)
 		);
 	end component VGA;
 
@@ -57,8 +57,8 @@ architecture component_list of FinalProject is
         port (
 			clk			: in  std_logic;  -- VGA clock
 			rst			: in  std_logic;  -- Reset
-			pixel_x    : in  STD_LOGIC_VECTOR(9 downto 0);  -- Pixel X coordinate
-			pixel_y    : in  STD_LOGIC_VECTOR(9 downto 0);  -- Pixel Y coordinate
+			--pixel_x    : in  STD_LOGIC_VECTOR(9 downto 0);  -- Pixel X coordinate
+			--pixel_y    : in  STD_LOGIC_VECTOR(9 downto 0);  -- Pixel Y coordinate
 			pixel_en   : in  STD_LOGIC;                     -- Pixel enable signal
 			ball_en   : in  STD_LOGIC;                      -- Ball enable signal
 			ball_x     : in  integer;                        -- Ball X position
@@ -133,14 +133,14 @@ architecture component_list of FinalProject is
 	signal rst		: std_logic;  -- Reset signal
 	signal pixel_en	: std_logic; -- Pixel enable signal (high when in active region)
 	signal ball_en	: std_logic := '1'; -- Ball enable signal (high when playing before scoring)
-	signal h_count	: integer;   -- Horizontal pixel count (optional, for debugging or extra features)
-	signal v_count	: integer;    -- Vertical line count (optional, for debugging or extra features)
+	--signal h_count	: integer;   -- Horizontal pixel count (optional, for debugging or extra features)
+	--signal v_count	: integer;    -- Vertical line count (optional, for debugging or extra features)
 
 	signal pixel_rgb        : std_logic_vector(17 downto 0);
 
 	-- Signal declarations for VGA and board drawing
-    signal pixel_x     : STD_LOGIC_VECTOR(9 downto 0);
-    signal pixel_y     : STD_LOGIC_VECTOR(9 downto 0);
+    --signal pixel_x     : STD_LOGIC_VECTOR(9 downto 0);
+    --signal pixel_y     : STD_LOGIC_VECTOR(9 downto 0);
     signal board_color : STD_LOGIC_VECTOR(11 downto 0); -- RGB color output
 
 	signal ball_x		: integer; -- Ball X position
@@ -191,9 +191,9 @@ begin
 			rst        => rst,
 			h_sync     => VGA_HS,
 			v_sync     => VGA_VS,
-			pixel_en   => pixel_en,
-			h_count    => h_count,
-			v_count    => v_count
+			pixel_en   => pixel_en
+			--h_count    => h_count,
+			--v_count    => v_count
 		);
 
 	-- Instantiate draw_board module
@@ -201,8 +201,8 @@ begin
         port map (
 			clk			=> vga_clk,
 			rst			=> rst,
-            pixel_x    => pixel_x,
-            pixel_y    => pixel_y,
+            --pixel_x    => pixel_x,
+            --pixel_y    => pixel_y,
             pixel_en   => pixel_en,
             ball_en   => ball_en,
             ball_x     => ball_x,
@@ -279,8 +279,9 @@ begin
 		end if;
 	end process;
 
-	process (current_state, p1_points, p2_points, new_ball_btn)
+	process (vga_clk)
 	begin
+		if rising_edge(vga_clk) then
 		case current_state is
 			when START =>
 				ball_en <= '0';
@@ -289,6 +290,7 @@ begin
 					ball_en <= '1';
 				else
 					next_state <= START;
+					ball_en <= '0';
 				end if;
 				
 			when GAME_RUNNING =>
@@ -297,6 +299,7 @@ begin
 					next_state <= SCORED;
 				else
 					next_state <= GAME_RUNNING;
+					ball_en <= '1';
 				end if;
 			
 			when SCORED =>
@@ -309,11 +312,13 @@ begin
 				end if;
 			
 			when FINISHED =>
+				next_state <= FINISHED;
 				ball_en <= '0';
 			
 			when others =>
 				next_state <= START;
 		end case;
+		end if;
 	end process;
 	
 end component_list;

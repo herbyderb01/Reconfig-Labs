@@ -29,7 +29,7 @@ architecture behavioral of ball_logic is
 	signal bottom_start_yposb : integer := 290;
 begin
 	
-	process(clk) 
+	process(clk, new_round) 
 	begin
 		if new_round = '1' then
 			if start_pos = '0' then				
